@@ -112,12 +112,13 @@ export default function EstimateItemRow({
 
         {/* Remove button */}
         <button
+          type="button"
           onClick={() => onRemove(item.uid)}
           disabled={!canRemove}
           className="shrink-0 mt-1 w-8 h-8 flex items-center justify-center rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
           aria-label="この項目を削除"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>

@@ -3,7 +3,7 @@ export default function Header() {
     <header className="bg-gradient-to-r from-[#0d7377] to-[#14919b] shadow-md">
       <div className="max-w-3xl mx-auto px-4 py-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl backdrop-blur-sm">
+          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl backdrop-blur-sm" aria-hidden="true">
             🔍
           </div>
           <div>

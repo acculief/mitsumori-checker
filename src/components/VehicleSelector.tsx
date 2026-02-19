@@ -41,6 +41,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
             <button
               key={size}
               onClick={() => onSelect(size)}
+              aria-pressed={isSelected}
               className={`group relative rounded-2xl border-2 p-5 text-center transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
                 isSelected
                   ? "border-[#0d7377] bg-[#e0f5f5] shadow-md ring-2 ring-[#0d7377]/20"
@@ -53,7 +54,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
                   ✓
                 </div>
               )}
-              <div className={`${ill.scale} mb-2 transition-transform duration-200 group-hover:scale-110`}>
+              <div className={`${ill.scale} mb-2 transition-transform duration-200 group-hover:scale-110`} aria-hidden="true">
                 {ill.icon}
               </div>
               <div className="font-bold text-lg text-[#1a2332]">

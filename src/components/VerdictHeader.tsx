@@ -58,7 +58,7 @@ export default function VerdictHeader({ summary }: Props) {
       className={`rounded-2xl bg-gradient-to-r ${v.bgClass} p-6 shadow-lg animate-scale-in`}
     >
       <div className="text-center">
-        <div className="text-4xl mb-2">{v.icon}</div>
+        <div className="text-4xl mb-2" aria-hidden="true">{v.icon}</div>
         <h3 className={`text-xl font-bold ${v.textClass} mb-1`}>
           {v.message}
         </h3>

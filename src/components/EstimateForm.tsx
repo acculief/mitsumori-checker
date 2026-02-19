@@ -37,7 +37,7 @@ export default function EstimateForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="animate-fade-in-up">
+    <form onSubmit={handleSubmit} className="animate-fade-in-up" aria-label="見積もり入力フォーム">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold text-[#1a2332]">
@@ -54,7 +54,7 @@ export default function EstimateForm({
           onClick={onBack}
           className="flex items-center gap-1 text-sm text-[#64748b] hover:text-[#0d7377] transition-colors cursor-pointer"
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           車両を変更

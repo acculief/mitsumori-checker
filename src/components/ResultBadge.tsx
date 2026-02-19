@@ -17,7 +17,7 @@ export default function ResultBadge({ verdict, size = "sm" }: Props) {
     <span
       className={`inline-flex items-center gap-1 rounded-full font-bold border ${sizeClass} ${c.bg} ${c.text} ${c.border}`}
     >
-      <span>{verdictEmoji[verdict]}</span>
+      <span aria-hidden="true">{verdictEmoji[verdict]}</span>
       {verdictLabels[verdict]}
     </span>
   );
