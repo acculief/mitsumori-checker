@@ -12,13 +12,18 @@ export default function ResultsTable({ items }: Props) {
     <div className="space-y-2">
       {items.map((item, i) => (
         <div
-          key={item.itemId}
+          key={`${item.itemId}-${i}`}
           className="rounded-lg border border-slate-200 bg-white p-3.5 animate-fade-in-up"
           style={{ animationDelay: `${Math.min(i, 5) * 50}ms` }}
         >
           {/* Top row: label + badge */}
           <div className="flex items-center justify-between mb-2">
-            <h4 className="font-bold text-slate-900 text-sm">{item.label}</h4>
+            <h4 className="font-bold text-slate-900 text-sm">
+              {item.label}
+              {item.quantity > 1 && (
+                <span className="text-xs font-normal text-slate-400 ml-1">×{item.quantity}</span>
+              )}
+            </h4>
             <ResultBadge verdict={item.verdict} />
           </div>
 

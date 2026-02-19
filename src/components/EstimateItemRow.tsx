@@ -1,6 +1,6 @@
 "use client";
 
-import { marketRates } from "@/data/market-rates";
+import { marketRates, quantityConfig } from "@/data/market-rates";
 import { EstimateItem, VehicleSize } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
 import ItemCombobox from "./ItemCombobox";
@@ -8,7 +8,8 @@ import ItemCombobox from "./ItemCombobox";
 interface Props {
   item: EstimateItem;
   vehicleSize: VehicleSize;
-  onChange: (uid: string, field: "itemId" | "amount", value: string) => void;
+  usedIds: Set<string>;
+  onChange: (uid: string, field: "itemId" | "amount" | "quantity", value: string) => void;
   onRemove: (uid: string) => void;
   canRemove: boolean;
 }
@@ -16,6 +17,7 @@ interface Props {
 export default function EstimateItemRow({
   item,
   vehicleSize,
+  usedIds,
   onChange,
   onRemove,
   canRemove,
@@ -24,6 +26,8 @@ export default function EstimateItemRow({
     ? marketRates.find((r) => r.id === item.itemId)
     : null;
   const range = selectedRate ? selectedRate.rates[vehicleSize] : null;
+  const qtyConfig = item.itemId ? quantityConfig[item.itemId] : null;
+  const qty = item.quantity || 1;
 
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-3.5">
@@ -32,8 +36,38 @@ export default function EstimateItemRow({
           {/* Combobox */}
           <ItemCombobox
             value={item.itemId}
+            usedIds={usedIds}
             onChange={(itemId) => onChange(item.uid, "itemId", itemId)}
           />
+
+          {/* Quantity selector (only for per-unit items) */}
+          {qtyConfig && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-500">数量</span>
+              <div className="inline-flex items-center rounded-md border border-slate-200">
+                {Array.from({ length: qtyConfig.max }, (_, i) => i + 1).map(
+                  (n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() =>
+                        onChange(item.uid, "quantity", String(n))
+                      }
+                      className={`px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
+                        qty === n
+                          ? "bg-[#c2410c] text-white"
+                          : "text-slate-600 hover:bg-slate-50"
+                      } ${n > 1 ? "border-l border-slate-200" : ""}`}
+                      aria-label={`${n}${qtyConfig.unit}`}
+                      aria-pressed={qty === n}
+                    >
+                      {n}{qtyConfig.unit}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Amount input */}
           <div className="relative">
@@ -43,7 +77,7 @@ export default function EstimateItemRow({
             <input
               type="number"
               inputMode="numeric"
-              placeholder="金額を入力"
+              placeholder={qtyConfig && qty > 1 ? `${qty}${qtyConfig.unit}分の合計金額` : "金額を入力"}
               aria-label="見積もり金額"
               value={item.amount}
               onChange={(e) => onChange(item.uid, "amount", e.target.value)}
@@ -53,13 +87,18 @@ export default function EstimateItemRow({
 
           {/* Market rate hint */}
           {range && (
-            <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
               <span className="text-[#c2410c] font-medium">相場</span>
               <span>
-                {formatYen(range.low)} 〜 {formatYen(range.high)}
+                {formatYen(range.low * qty)} 〜 {formatYen(range.high * qty)}
               </span>
               <span className="text-slate-300">&middot;</span>
-              <span>中央値 {formatYen(range.median)}</span>
+              <span>中央値 {formatYen(range.median * qty)}</span>
+              {qtyConfig && qty > 1 && (
+                <span className="text-slate-400">
+                  （{qty}{qtyConfig.unit}分）
+                </span>
+              )}
             </div>
           )}
         </div>

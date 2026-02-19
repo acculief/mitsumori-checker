@@ -19,6 +19,7 @@ export interface EstimateItem {
   uid: string;
   itemId: string;
   amount: number | "";
+  quantity: number;
 }
 
 export type Verdict = "cheap" | "fair" | "slightly_high" | "high" | "very_high";
@@ -27,6 +28,7 @@ export interface CompareResult {
   itemId: string;
   label: string;
   amount: number;
+  quantity: number;
   range: PriceRange;
   verdict: Verdict;
   diffFromMedian: number;

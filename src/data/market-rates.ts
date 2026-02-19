@@ -1,5 +1,12 @@
 import { MarketRateItem } from "@/lib/types";
 
+/** 数量選択が可能な項目の設定 */
+export const quantityConfig: Record<string, { unit: string; max: number }> = {
+  tire: { unit: "本", max: 4 },
+  driveshaft_boot: { unit: "箇所", max: 4 },
+  side_glass: { unit: "枚", max: 4 },
+};
+
 export const marketRates: MarketRateItem[] = [
   // ── 法定費用 ──
   {

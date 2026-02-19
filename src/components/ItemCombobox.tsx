@@ -14,10 +14,11 @@ const categoryOrder = ["legal", "inspection", "maintenance"] as const;
 
 interface Props {
   value: string; // itemId
+  usedIds: Set<string>;
   onChange: (itemId: string) => void;
 }
 
-export default function ItemCombobox({ value, onChange }: Props) {
+export default function ItemCombobox({ value, usedIds, onChange }: Props) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
@@ -51,6 +52,10 @@ export default function ItemCombobox({ value, onChange }: Props) {
 
   // Flat list for keyboard navigation
   const flatItems = groups.flatMap((g) => g.items);
+
+  function isDisabled(id: string) {
+    return usedIds.has(id) && id !== value;
+  }
 
   // Close on outside click
   useEffect(() => {
@@ -114,18 +119,31 @@ export default function ItemCombobox({ value, onChange }: Props) {
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        setHighlightIndex((prev) =>
-          prev + 1 < flatItems.length ? prev + 1 : prev
-        );
+        setHighlightIndex((prev) => {
+          let next = prev + 1;
+          while (next < flatItems.length && isDisabled(flatItems[next].id)) {
+            next++;
+          }
+          return next < flatItems.length ? next : prev;
+        });
         break;
       case "ArrowUp":
         e.preventDefault();
-        setHighlightIndex((prev) => (prev > 0 ? prev - 1 : prev));
+        setHighlightIndex((prev) => {
+          let next = prev - 1;
+          while (next >= 0 && isDisabled(flatItems[next].id)) {
+            next--;
+          }
+          return next >= 0 ? next : prev;
+        });
         break;
       case "Enter":
         e.preventDefault();
         if (highlightIndex >= 0 && highlightIndex < flatItems.length) {
-          handleSelect(flatItems[highlightIndex].id);
+          const item = flatItems[highlightIndex];
+          if (!isDisabled(item.id)) {
+            handleSelect(item.id);
+          }
         }
         break;
       case "Escape":
@@ -202,6 +220,7 @@ export default function ItemCombobox({ value, onChange }: Props) {
                   </div>
                   {group.items.map((item) => {
                     const flatIndex = flatItems.indexOf(item);
+                    const disabled = isDisabled(item.id);
                     const isHighlighted = flatIndex === highlightIndex;
                     const isSelected = item.id === value;
 
@@ -211,11 +230,16 @@ export default function ItemCombobox({ value, onChange }: Props) {
                         data-item-index={flatIndex}
                         role="option"
                         aria-selected={isSelected}
-                        onClick={() => handleSelect(item.id)}
+                        aria-disabled={disabled}
+                        onClick={() => {
+                          if (!disabled) handleSelect(item.id);
+                        }}
                         className={`px-3 py-2 text-sm cursor-pointer flex items-center justify-between ${
-                          isHighlighted
-                            ? "bg-[#fff2e6] text-slate-900"
-                            : "text-slate-700 hover:bg-slate-50"
+                          disabled
+                            ? "text-slate-300 cursor-not-allowed"
+                            : isHighlighted
+                              ? "bg-[#fff2e6] text-slate-900"
+                              : "text-slate-700 hover:bg-slate-50"
                         } ${isSelected ? "font-medium text-[#c2410c]" : ""}`}
                       >
                         <span className="truncate">{item.label}</span>

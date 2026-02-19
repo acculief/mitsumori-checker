@@ -28,13 +28,22 @@ export function compareEstimate(
     const rateItem = marketRates.find((r) => r.id === item.itemId);
     if (!rateItem) continue;
 
-    const range = rateItem.rates[vehicleSize];
+    const baseRange = rateItem.rates[vehicleSize];
+    const qty = item.quantity || 1;
     const amount = Number(item.amount);
+
+    // 数量分をかけたレンジで比較
+    const range: PriceRange = {
+      low: baseRange.low * qty,
+      median: baseRange.median * qty,
+      high: baseRange.high * qty,
+    };
 
     results.push({
       itemId: item.itemId,
       label: rateItem.label,
       amount,
+      quantity: qty,
       range,
       verdict: judge(amount, range),
       diffFromMedian: amount - range.median,

@@ -7,7 +7,7 @@ import EstimateItemRow from "./EstimateItemRow";
 interface Props {
   vehicleSize: VehicleSize;
   items: EstimateItem[];
-  onUpdateItem: (uid: string, field: "itemId" | "amount", value: string) => void;
+  onUpdateItem: (uid: string, field: "itemId" | "amount" | "quantity", value: string) => void;
   onAddItem: () => void;
   onRemoveItem: (uid: string) => void;
   onSubmit: () => void;
@@ -23,6 +23,7 @@ export default function EstimateForm({
   onSubmit,
   onBack,
 }: Props) {
+  const usedIds = new Set(items.map((it) => it.itemId).filter(Boolean));
   const hasValidItem = items.some(
     (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
   );
@@ -66,6 +67,7 @@ export default function EstimateForm({
             key={item.uid}
             item={item}
             vehicleSize={vehicleSize}
+            usedIds={usedIds}
             onChange={onUpdateItem}
             onRemove={onRemoveItem}
             canRemove={items.length > 1}

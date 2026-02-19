@@ -9,7 +9,7 @@ function genUid() {
 }
 
 function emptyItem(): EstimateItem {
-  return { uid: genUid(), itemId: "", amount: "" };
+  return { uid: genUid(), itemId: "", amount: "", quantity: 1 };
 }
 
 export function useEstimateStore() {
@@ -23,14 +23,18 @@ export function useEstimateStore() {
   }, []);
 
   const updateItem = useCallback(
-    (uid: string, field: "itemId" | "amount", value: string) => {
+    (uid: string, field: "itemId" | "amount" | "quantity", value: string) => {
       setItems((prev) =>
         prev.map((it) => {
           if (it.uid !== uid) return it;
           if (field === "amount") {
             return { ...it, amount: value === "" ? "" : Number(value) };
           }
-          return { ...it, [field]: value };
+          if (field === "quantity") {
+            return { ...it, quantity: Math.max(1, Number(value)) };
+          }
+          // itemId変更時は数量を1にリセット
+          return { ...it, itemId: value, quantity: 1 };
         })
       );
     },
