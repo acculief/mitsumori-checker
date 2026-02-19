@@ -1,10 +1,7 @@
 import { CompareResult } from "@/lib/types";
+import { formatYen } from "@/lib/formatters";
 import ResultBadge from "./ResultBadge";
 import PriceRangeBar from "./PriceRangeBar";
-
-function formatYen(n: number) {
-  return `¥${n.toLocaleString()}`;
-}
 
 interface Props {
   items: CompareResult[];

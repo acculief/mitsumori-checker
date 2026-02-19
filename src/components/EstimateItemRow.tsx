@@ -2,6 +2,7 @@
 
 import { marketRates } from "@/data/market-rates";
 import { EstimateItem, VehicleSize } from "@/lib/types";
+import { formatYen } from "@/lib/formatters";
 
 interface Props {
   item: EstimateItem;
@@ -10,10 +11,6 @@ interface Props {
   onChange: (uid: string, field: "itemId" | "amount", value: string) => void;
   onRemove: (uid: string) => void;
   canRemove: boolean;
-}
-
-function formatYen(n: number) {
-  return `¥${n.toLocaleString()}`;
 }
 
 export default function EstimateItemRow({
@@ -37,6 +34,7 @@ export default function EstimateItemRow({
           <select
             value={item.itemId}
             onChange={(e) => onChange(item.uid, "itemId", e.target.value)}
+            aria-label="見積もり項目を選択"
             className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-[#1a2332] focus:outline-none focus:ring-2 focus:ring-[#0d7377] focus:border-transparent transition-shadow"
           >
             <option value="">-- 項目を選択してください --</option>
@@ -91,6 +89,7 @@ export default function EstimateItemRow({
                 type="number"
                 inputMode="numeric"
                 placeholder="見積もり金額を入力"
+                aria-label="見積もり金額"
                 value={item.amount}
                 onChange={(e) => onChange(item.uid, "amount", e.target.value)}
                 className="w-full rounded-lg border border-slate-200 bg-slate-50 pl-7 pr-3 py-2.5 text-sm text-[#1a2332] text-right font-medium focus:outline-none focus:ring-2 focus:ring-[#0d7377] focus:border-transparent transition-shadow [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -116,7 +115,7 @@ export default function EstimateItemRow({
           onClick={() => onRemove(item.uid)}
           disabled={!canRemove}
           className="shrink-0 mt-1 w-8 h-8 flex items-center justify-center rounded-lg text-slate-300 hover:text-rose-500 hover:bg-rose-50 disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-          aria-label="削除"
+          aria-label="この項目を削除"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

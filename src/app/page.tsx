@@ -24,7 +24,7 @@ export default function Home() {
 
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
         {/* Step indicator */}
-        <nav className="mb-8">
+        <nav className="mb-8" aria-label="診断ステップ">
           <div className="flex items-center justify-between max-w-xs mx-auto">
             {stepLabels.map((label, i) => {
               const stepNum = i + 1;

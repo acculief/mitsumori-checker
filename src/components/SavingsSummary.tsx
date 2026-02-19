@@ -1,8 +1,5 @@
 import { SummaryResult } from "@/lib/types";
-
-function formatYen(n: number) {
-  return `¥${n.toLocaleString()}`;
-}
+import { formatYen } from "@/lib/formatters";
 
 interface Props {
   summary: SummaryResult;

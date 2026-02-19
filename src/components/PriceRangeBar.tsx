@@ -1,14 +1,11 @@
 import { PriceRange, Verdict } from "@/lib/types";
 import { verdictColors } from "@/lib/constants";
+import { formatYen } from "@/lib/formatters";
 
 interface Props {
   amount: number;
   range: PriceRange;
   verdict: Verdict;
-}
-
-function formatYen(n: number) {
-  return `¥${n.toLocaleString()}`;
 }
 
 export default function PriceRangeBar({ amount, range, verdict }: Props) {

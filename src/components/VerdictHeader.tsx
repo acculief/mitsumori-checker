@@ -1,4 +1,5 @@
 import { SummaryResult } from "@/lib/types";
+import { formatYen } from "@/lib/formatters";
 
 interface Props {
   summary: SummaryResult;
@@ -47,10 +48,6 @@ function getOverallMessage(summary: SummaryResult): {
     textClass: "text-white",
     icon: "🚨",
   };
-}
-
-function formatYen(n: number) {
-  return `¥${n.toLocaleString()}`;
 }
 
 export default function VerdictHeader({ summary }: Props) {
