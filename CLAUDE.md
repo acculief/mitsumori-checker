@@ -101,7 +101,7 @@ https://mitsumori-checker.vercel.app
 ### 直近のアクションプラン（優先順）
 1. ✅ MVP完成（3ステップフォーム + 診断結果）
 2. ✅ リッチUI化（競合ベンチマーク反映）
-3. 🔲 SEO基盤整備（OGP画像、JSON-LD、サイトマップ）
+3. ✅ SEO基盤整備（metadata/openGraph/twitter/JSON-LD/サイトマップ/robots.txt）※OGP画像は未対応
 4. 🔲 コンテンツ拡充（車検の基礎知識ページ、FAQ）
 5. 🔲 SNS共有機能（診断結果をシェア → バイラル獲得）
 6. 🔲 GA4 / Search Console 連携
