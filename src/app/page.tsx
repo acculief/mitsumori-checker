@@ -40,9 +40,9 @@ export default function Home() {
                       aria-current={isCurrent ? "step" : undefined}
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                         isComplete
-                          ? "bg-[#0d7377] text-white"
+                          ? "bg-[#c2410c] text-white"
                           : isActive
-                            ? "bg-[#0d7377] text-white ring-2 ring-[#0d7377]/20"
+                            ? "bg-[#c2410c] text-white ring-2 ring-[#c2410c]/20"
                             : "bg-slate-200 text-slate-400"
                       }`}
                     >
@@ -56,7 +56,7 @@ export default function Home() {
                     </div>
                     <span
                       className={`text-[11px] font-medium ${
-                        isActive ? "text-[#0d7377]" : "text-slate-400"
+                        isActive ? "text-[#c2410c]" : "text-slate-400"
                       }`}
                     >
                       {label}
@@ -65,7 +65,7 @@ export default function Home() {
                   {i < stepLabels.length - 1 && (
                     <div
                       className={`flex-1 h-px mx-1.5 mt-[-16px] ${
-                        isComplete ? "bg-[#0d7377]" : "bg-slate-200"
+                        isComplete ? "bg-[#c2410c]" : "bg-slate-200"
                       }`}
                     />
                   )}
@@ -130,7 +130,7 @@ export default function Home() {
 
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
-                <span className="w-1 h-4 bg-[#0d7377] rounded-full" aria-hidden="true" />
+                <span className="w-1 h-4 bg-[#c2410c] rounded-full" aria-hidden="true" />
                 項目別の詳細比較
               </h3>
               <ResultsTable items={summary.items} />
@@ -167,7 +167,7 @@ export default function Home() {
             15項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
           <p className="text-[11px] text-slate-300 pt-1">
-            &copy; 2025 見積もりチェッカー
+            &copy; 2025 車検費用チェッカー
           </p>
         </div>
       </footer>

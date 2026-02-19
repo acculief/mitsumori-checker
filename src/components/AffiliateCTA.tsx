@@ -40,7 +40,7 @@ export default function AffiliateCTA({ hasExpensiveItems }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${service.name}で詳しく見る`}
-              className="block w-full text-center py-2 rounded-md text-xs font-bold bg-[#0d7377] text-white hover:bg-[#095b5e] transition-colors"
+              className="block w-full text-center py-2 rounded-md text-xs font-bold bg-[#c2410c] text-white hover:bg-[#9a3412] transition-colors"
             >
               詳しく見る
             </a>

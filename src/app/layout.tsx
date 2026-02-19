@@ -9,13 +9,13 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 const siteUrl = "https://mitsumori-checker.vercel.app";
-const siteName = "見積もりチェッカー";
+const siteName = "車検費用チェッカー";
 const siteDescription =
   "車検・自動車修理の見積もりを相場データと比較して「適正/高い」を無料判定。登録不要・個人情報不要。ぼったくり防止に。";
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteName}｜車検・自動車修理の費用を無料診断`,
+    default: `${siteName}｜車検の見積もりを相場と比較して無料診断`,
     template: `%s｜${siteName}`,
   },
   description: siteDescription,
@@ -29,10 +29,11 @@ export const metadata: Metadata = {
     "自動車修理",
     "ブレーキパッド 交換 費用",
     "車検 比較",
+    "車検費用チェッカー",
   ],
   authors: [{ name: siteName }],
   openGraph: {
-    title: `${siteName}｜車検・自動車修理の費用を無料診断`,
+    title: `${siteName}｜車検の見積もりを相場と比較して無料診断`,
     description: siteDescription,
     url: siteUrl,
     siteName,

@@ -35,7 +35,7 @@ export default function EstimateItemRow({
             value={item.itemId}
             onChange={(e) => onChange(item.uid, "itemId", e.target.value)}
             aria-label="見積もり項目を選択"
-            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206L8%2010L12%206%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.5rem_center] pr-8 focus:outline-none focus:ring-2 focus:ring-[#0d7377] focus:border-transparent"
+            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206L8%2010L12%206%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.5rem_center] pr-8 focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent"
           >
             <option value="">-- 項目を選択 --</option>
             <optgroup label="法定費用">
@@ -91,14 +91,14 @@ export default function EstimateItemRow({
               aria-label="見積もり金額"
               value={item.amount}
               onChange={(e) => onChange(item.uid, "amount", e.target.value)}
-              className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-[#0d7377] focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
 
           {/* Market rate hint */}
           {range && (
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              <span className="text-[#0d7377] font-medium">相場</span>
+              <span className="text-[#c2410c] font-medium">相場</span>
               <span>
                 {formatYen(range.low)} 〜 {formatYen(range.high)}
               </span>
