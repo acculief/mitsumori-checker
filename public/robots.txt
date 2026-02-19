@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mitsumori-checker.vercel.app/sitemap.xml
