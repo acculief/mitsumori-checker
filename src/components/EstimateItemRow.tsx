@@ -8,7 +8,6 @@ import ItemCombobox from "./ItemCombobox";
 interface Props {
   item: EstimateItem;
   vehicleSize: VehicleSize;
-  usedIds: Set<string>;
   onChange: (uid: string, field: "itemId" | "amount", value: string) => void;
   onRemove: (uid: string) => void;
   canRemove: boolean;
@@ -17,7 +16,6 @@ interface Props {
 export default function EstimateItemRow({
   item,
   vehicleSize,
-  usedIds,
   onChange,
   onRemove,
   canRemove,
@@ -34,7 +32,6 @@ export default function EstimateItemRow({
           {/* Combobox */}
           <ItemCombobox
             value={item.itemId}
-            usedIds={usedIds}
             onChange={(itemId) => onChange(item.uid, "itemId", itemId)}
           />
 

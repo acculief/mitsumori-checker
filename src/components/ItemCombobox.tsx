@@ -14,11 +14,10 @@ const categoryOrder = ["legal", "inspection", "maintenance"] as const;
 
 interface Props {
   value: string; // itemId
-  usedIds: Set<string>;
   onChange: (itemId: string) => void;
 }
 
-export default function ItemCombobox({ value, usedIds, onChange }: Props) {
+export default function ItemCombobox({ value, onChange }: Props) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
@@ -115,40 +114,18 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        setHighlightIndex((prev) => {
-          let next = prev + 1;
-          // Skip disabled items
-          while (
-            next < flatItems.length &&
-            usedIds.has(flatItems[next].id) &&
-            flatItems[next].id !== value
-          ) {
-            next++;
-          }
-          return next < flatItems.length ? next : prev;
-        });
+        setHighlightIndex((prev) =>
+          prev + 1 < flatItems.length ? prev + 1 : prev
+        );
         break;
       case "ArrowUp":
         e.preventDefault();
-        setHighlightIndex((prev) => {
-          let next = prev - 1;
-          while (
-            next >= 0 &&
-            usedIds.has(flatItems[next].id) &&
-            flatItems[next].id !== value
-          ) {
-            next--;
-          }
-          return next >= 0 ? next : prev;
-        });
+        setHighlightIndex((prev) => (prev > 0 ? prev - 1 : prev));
         break;
       case "Enter":
         e.preventDefault();
         if (highlightIndex >= 0 && highlightIndex < flatItems.length) {
-          const item = flatItems[highlightIndex];
-          if (!usedIds.has(item.id) || item.id === value) {
-            handleSelect(item.id);
-          }
+          handleSelect(flatItems[highlightIndex].id);
         }
         break;
       case "Escape":
@@ -225,8 +202,6 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
                   </div>
                   {group.items.map((item) => {
                     const flatIndex = flatItems.indexOf(item);
-                    const isDisabled =
-                      usedIds.has(item.id) && item.id !== value;
                     const isHighlighted = flatIndex === highlightIndex;
                     const isSelected = item.id === value;
 
@@ -236,16 +211,11 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
                         data-item-index={flatIndex}
                         role="option"
                         aria-selected={isSelected}
-                        aria-disabled={isDisabled}
-                        onClick={() => {
-                          if (!isDisabled) handleSelect(item.id);
-                        }}
+                        onClick={() => handleSelect(item.id)}
                         className={`px-3 py-2 text-sm cursor-pointer flex items-center justify-between ${
-                          isDisabled
-                            ? "text-slate-300 cursor-not-allowed"
-                            : isHighlighted
-                              ? "bg-[#fff2e6] text-slate-900"
-                              : "text-slate-700 hover:bg-slate-50"
+                          isHighlighted
+                            ? "bg-[#fff2e6] text-slate-900"
+                            : "text-slate-700 hover:bg-slate-50"
                         } ${isSelected ? "font-medium text-[#c2410c]" : ""}`}
                       >
                         <span className="truncate">{item.label}</span>

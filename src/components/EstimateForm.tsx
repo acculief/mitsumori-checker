@@ -23,7 +23,6 @@ export default function EstimateForm({
   onSubmit,
   onBack,
 }: Props) {
-  const usedIds = new Set(items.map((it) => it.itemId).filter(Boolean));
   const hasValidItem = items.some(
     (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
   );
@@ -67,7 +66,6 @@ export default function EstimateForm({
             key={item.uid}
             item={item}
             vehicleSize={vehicleSize}
-            usedIds={usedIds}
             onChange={onUpdateItem}
             onRemove={onRemoveItem}
             canRemove={items.length > 1}
