@@ -6,6 +6,8 @@ import EstimateForm from "@/components/EstimateForm";
 import VerdictHeader from "@/components/VerdictHeader";
 import SavingsSummary from "@/components/SavingsSummary";
 import ResultsTable from "@/components/ResultsTable";
+import AffiliateCTA from "@/components/AffiliateCTA";
+import ShareButtons from "@/components/ShareButtons";
 import { useEstimateStore } from "@/hooks/useEstimateStore";
 import { compareEstimate } from "@/lib/compare";
 import { stepLabels } from "@/lib/constants";
@@ -34,6 +36,7 @@ export default function Home() {
                 <div key={label} className="flex items-center gap-0 flex-1 last:flex-none">
                   <div className="flex flex-col items-center gap-1">
                     <div
+                      aria-current={isActive && !isComplete ? "step" : undefined}
                       className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                         isComplete
                           ? "bg-[#0d7377] text-white shadow-md shadow-[#0d7377]/30"
@@ -43,7 +46,7 @@ export default function Home() {
                       }`}
                     >
                       {isComplete ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                           <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       ) : (
@@ -98,6 +101,12 @@ export default function Home() {
             <VerdictHeader summary={summary} />
             <SavingsSummary summary={summary} />
 
+            <AffiliateCTA
+              hasExpensiveItems={summary.items.some((i) =>
+                ["slightly_high", "high", "very_high"].includes(i.verdict)
+              )}
+            />
+
             <div>
               <h3 className="font-bold text-[#1a2332] text-lg mb-3">
                 項目別の詳細比較
@@ -105,19 +114,22 @@ export default function Home() {
               <ResultsTable items={summary.items} />
             </div>
 
-            <div className="flex gap-3">
-              <button
-                onClick={store.backToForm}
-                className="flex-1 py-3 rounded-xl border-2 border-[#0d7377] text-sm font-bold text-[#0d7377] hover:bg-[#e0f5f5] transition-all cursor-pointer"
-              >
-                見積もりを修正
-              </button>
-              <button
-                onClick={store.reset}
-                className="flex-1 py-3 rounded-xl border-2 border-slate-200 text-sm font-bold text-[#64748b] hover:bg-slate-50 transition-all cursor-pointer"
-              >
-                最初からやり直す
-              </button>
+            <div className="space-y-3">
+              <ShareButtons summary={summary} />
+              <div className="flex gap-3">
+                <button
+                  onClick={store.backToForm}
+                  className="flex-1 py-3 rounded-xl border-2 border-[#0d7377] text-sm font-bold text-[#0d7377] hover:bg-[#e0f5f5] transition-all cursor-pointer"
+                >
+                  見積もりを修正
+                </button>
+                <button
+                  onClick={store.reset}
+                  className="flex-1 py-3 rounded-xl border-2 border-slate-200 text-sm font-bold text-[#64748b] hover:bg-slate-50 transition-all cursor-pointer"
+                >
+                  最初からやり直す
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -131,6 +143,9 @@ export default function Home() {
           </p>
           <p className="text-xs text-[#94a3b8]">
             主要15項目 ・ 4車両サイズ ・ 価格レンジ3段階のデータベースで判定
+          </p>
+          <p className="text-xs text-[#94a3b8]">
+            &copy; 2025 見積もりチェッカー
           </p>
         </div>
       </footer>
