@@ -21,6 +21,7 @@
 - `src/lib/types.ts` — 全TypeScript型定義
 - `src/lib/compare.ts` — 価格比較ロジック（5段階判定）
 - `src/lib/constants.ts` — ラベル・色・アイコン定数
+- `src/data/affiliate-links.ts` — アフィリエイト送客先データ（プレースホルダーURL）
 
 ## コンポーネント構成
 - `Header.tsx` — グラデーションヘッダー
@@ -32,6 +33,8 @@
 - `ResultsTable.tsx` — 項目別カード（レンジバー付き）
 - `ResultBadge.tsx` — 判定バッジ（割安/適正/やや高い/高い/非常に高い）
 - `PriceRangeBar.tsx` — 相場レンジバー
+- `AffiliateCTA.tsx` — 車検予約サービスへの送客CTA
+- `ShareButtons.tsx` — SNS共有ボタン（X共有 + URLコピー）
 
 ## 判定ロジック
 | 条件 | 判定 | 色 |
@@ -103,9 +106,9 @@ https://mitsumori-checker.vercel.app
 2. ✅ リッチUI化（競合ベンチマーク反映）
 3. ✅ SEO基盤整備（metadata/openGraph/twitter/JSON-LD/サイトマップ/robots.txt）※OGP画像は未対応
 4. 🔲 コンテンツ拡充（車検の基礎知識ページ、FAQ）
-5. 🔲 SNS共有機能（診断結果をシェア → バイラル獲得）
+5. ✅ SNS共有機能（X共有 + URLコピー）
 6. 🔲 GA4 / Search Console 連携
-7. 🔲 アフィリエイト導線（車検予約サービスへのCTA）
+7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA）
 8. 🔲 PWA対応（オフライン利用、ホーム画面追加）
 9. 🔲 相見積もり機能（複数店舗の見積もりを並列比較）
 10. 🔲 項目別ガイドページ（コンテンツSEO）
