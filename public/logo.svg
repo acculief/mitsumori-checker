@@ -1,0 +1,14 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rounded square background -->
+  <rect width="36" height="36" rx="8" fill="#c2410c"/>
+  <!-- Car silhouette (top) -->
+  <path d="M8 20h20v3a2 2 0 01-2 2H10a2 2 0 01-2-2v-3z" fill="rgba(255,255,255,0.25)"/>
+  <path d="M10.5 20l2.5-5h10l2.5 5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="17" y1="15.5" x2="17" y2="20" stroke="white" stroke-width="1" opacity="0.5"/>
+  <!-- Wheels -->
+  <circle cx="13" cy="24" r="1.5" fill="white"/>
+  <circle cx="23" cy="24" r="1.5" fill="white"/>
+  <!-- Checkmark (bottom-right badge) -->
+  <circle cx="27" cy="11" r="6" fill="white"/>
+  <path d="M24 11l2 2 4-4" stroke="#c2410c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

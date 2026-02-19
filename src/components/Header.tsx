@@ -1,11 +1,17 @@
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
-      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#c2410c] flex items-center justify-center" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 12l2 2 4-4" />
-            <circle cx="12" cy="12" r="10" />
+      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-2.5">
+        <div className="shrink-0" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="8" fill="#c2410c"/>
+            <path d="M8 20h20v3a2 2 0 01-2 2H10a2 2 0 01-2-2v-3z" fill="rgba(255,255,255,0.25)"/>
+            <path d="M10.5 20l2.5-5h10l2.5 5" stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+            <line x1="17" y1="15.5" x2="17" y2="20" stroke="white" strokeWidth="1" opacity="0.5"/>
+            <circle cx="13" cy="24" r="1.5" fill="white"/>
+            <circle cx="23" cy="24" r="1.5" fill="white"/>
+            <circle cx="27" cy="11" r="6" fill="white"/>
+            <path d="M24 11l2 2 4-4" stroke="#c2410c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
         <div>

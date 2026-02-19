@@ -85,7 +85,7 @@ export default function Home() {
             {/* Trust signals */}
             <div className="mt-8 grid grid-cols-3 gap-3 text-center">
               <div>
-                <div className="text-lg font-bold text-slate-900">15</div>
+                <div className="text-lg font-bold text-slate-900">23</div>
                 <div className="text-[11px] text-slate-500">診断対応項目</div>
               </div>
               <div>
@@ -164,7 +164,7 @@ export default function Home() {
             地域・車種・年式により実際の費用は異なります。
           </p>
           <p className="text-[11px] text-slate-400">
-            15項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
+            23項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
           <p className="text-[11px] text-slate-300 pt-1">
             &copy; 2025 車検費用チェッカー

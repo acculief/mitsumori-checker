@@ -169,4 +169,92 @@ export const marketRates: MarketRateItem[] = [
       large:  { low: 10000, median: 15000, high: 22000 },
     },
   },
+  {
+    id: "windshield",
+    label: "フロントガラス交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 50000, median: 75000,  high: 100000 },
+      small:  { low: 65000, median: 85000,  high: 110000 },
+      medium: { low: 70000, median: 90000,  high: 130000 },
+      large:  { low: 90000, median: 115000, high: 150000 },
+    },
+  },
+  {
+    id: "brake_rotor_front",
+    label: "ブレーキディスクローター交換（フロント）",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 10000, median: 18000, high: 28000 },
+      small:  { low: 14000, median: 25000, high: 40000 },
+      medium: { low: 18000, median: 32000, high: 55000 },
+      large:  { low: 25000, median: 45000, high: 80000 },
+    },
+  },
+  {
+    id: "air_filter",
+    label: "エアクリーナー（エアフィルター）交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 2500, median: 4000, high: 7000 },
+      small:  { low: 3500, median: 6000, high: 10000 },
+      medium: { low: 4000, median: 7000, high: 12000 },
+      large:  { low: 5000, median: 8000, high: 15000 },
+    },
+  },
+  {
+    id: "cabin_air_filter",
+    label: "エアコンフィルター交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 2000, median: 3500, high: 6000 },
+      small:  { low: 2500, median: 4500, high: 8000 },
+      medium: { low: 3000, median: 5500, high: 10000 },
+      large:  { low: 3500, median: 6500, high: 12000 },
+    },
+  },
+  {
+    id: "v_belt",
+    label: "Vベルト（ファンベルト）交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 8000,  median: 13000, high: 20000 },
+      small:  { low: 10000, median: 16000, high: 25000 },
+      medium: { low: 13000, median: 20000, high: 30000 },
+      large:  { low: 16000, median: 25000, high: 38000 },
+    },
+  },
+  {
+    id: "driveshaft_boot",
+    label: "ドライブシャフトブーツ交換（1箇所）",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 8000,  median: 15000, high: 25000 },
+      small:  { low: 12000, median: 20000, high: 30000 },
+      medium: { low: 15000, median: 25000, high: 40000 },
+      large:  { low: 20000, median: 32000, high: 55000 },
+    },
+  },
+  {
+    id: "tire",
+    label: "タイヤ交換（1本）",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 5000,  median: 9000,  high: 18000 },
+      small:  { low: 7000,  median: 12000, high: 25000 },
+      medium: { low: 9000,  median: 16000, high: 35000 },
+      large:  { low: 12000, median: 22000, high: 50000 },
+    },
+  },
+  {
+    id: "power_steering_fluid",
+    label: "パワーステアリングフルード交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 3000, median: 5000, high: 8000 },
+      small:  { low: 4000, median: 6500, high: 10000 },
+      medium: { low: 5000, median: 8000, high: 12000 },
+      large:  { low: 5500, median: 9000, high: 14000 },
+    },
+  },
 ];
