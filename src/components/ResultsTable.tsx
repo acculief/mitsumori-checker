@@ -1,5 +1,6 @@
 import { CompareResult } from "@/lib/types";
 import ResultBadge from "./ResultBadge";
+import PriceRangeBar from "./PriceRangeBar";
 
 function formatYen(n: number) {
   return `¥${n.toLocaleString()}`;
@@ -11,49 +12,58 @@ interface Props {
 
 export default function ResultsTable({ items }: Props) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-slate-200 text-left text-slate-500">
-            <th className="py-2 pr-2 font-medium">項目</th>
-            <th className="py-2 px-2 font-medium text-right">見積もり額</th>
-            <th className="py-2 px-2 font-medium text-right">相場（中央値）</th>
-            <th className="py-2 px-2 font-medium text-right">差額</th>
-            <th className="py-2 pl-2 font-medium text-center">判定</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr
-              key={item.itemId}
-              className="border-b border-slate-100 last:border-b-0"
-            >
-              <td className="py-3 pr-2 text-slate-800">{item.label}</td>
-              <td className="py-3 px-2 text-right font-medium text-slate-800">
+    <div className="space-y-3">
+      {items.map((item, i) => (
+        <div
+          key={item.itemId}
+          className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm animate-fade-in-up"
+          style={{ animationDelay: `${i * 60}ms` }}
+        >
+          {/* Top row: label + badge */}
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="font-bold text-[#1a2332] text-sm">{item.label}</h4>
+            <ResultBadge verdict={item.verdict} />
+          </div>
+
+          {/* Price comparison */}
+          <div className="flex items-baseline justify-between text-sm">
+            <div>
+              <span className="text-[#64748b]">見積もり </span>
+              <span className="font-bold text-[#1a2332]">
                 {formatYen(item.amount)}
-              </td>
-              <td className="py-3 px-2 text-right text-slate-500">
+              </span>
+            </div>
+            <div>
+              <span className="text-[#64748b]">中央値 </span>
+              <span className="font-medium text-[#64748b]">
                 {formatYen(item.range.median)}
-              </td>
-              <td
-                className={`py-3 px-2 text-right font-medium ${
+              </span>
+            </div>
+            <div>
+              <span className="text-[#64748b]">差額 </span>
+              <span
+                className={`font-bold ${
                   item.diffFromMedian > 0
-                    ? "text-red-600"
+                    ? "text-rose-600"
                     : item.diffFromMedian < 0
-                      ? "text-blue-600"
-                      : "text-slate-500"
+                      ? "text-sky-600"
+                      : "text-slate-400"
                 }`}
               >
                 {item.diffFromMedian > 0 ? "+" : ""}
                 {formatYen(item.diffFromMedian)}
-              </td>
-              <td className="py-3 pl-2 text-center">
-                <ResultBadge verdict={item.verdict} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </span>
+            </div>
+          </div>
+
+          {/* Range bar */}
+          <PriceRangeBar
+            amount={item.amount}
+            range={item.range}
+            verdict={item.verdict}
+          />
+        </div>
+      ))}
     </div>
   );
 }

@@ -14,11 +14,11 @@ export const vehicleSizeDescriptions: Record<VehicleSize, string> = {
   large: "2,000cc超",
 };
 
-export const vehicleSizeIcons: Record<VehicleSize, string> = {
-  kei: "🚗",
-  small: "🚙",
-  medium: "🚐",
-  large: "🚛",
+export const vehicleSizeExamples: Record<VehicleSize, string> = {
+  kei: "N-BOX, タント, ワゴンR",
+  small: "アクア, フィット, ヤリス",
+  medium: "プリウス, カローラ, CX-5",
+  large: "アルファード, ランクル, エルグランド",
 };
 
 export const verdictLabels: Record<Verdict, string> = {
@@ -29,33 +29,48 @@ export const verdictLabels: Record<Verdict, string> = {
   very_high: "非常に高い",
 };
 
+export const verdictEmoji: Record<Verdict, string> = {
+  cheap: "✨",
+  fair: "✅",
+  slightly_high: "⚠️",
+  high: "🔶",
+  very_high: "🚨",
+};
+
 export const verdictColors: Record<
   Verdict,
-  { bg: string; text: string; border: string }
+  { bg: string; text: string; border: string; bar: string }
 > = {
   cheap: {
-    bg: "bg-blue-100",
-    text: "text-blue-800",
-    border: "border-blue-300",
+    bg: "bg-sky-50",
+    text: "text-sky-700",
+    border: "border-sky-300",
+    bar: "bg-sky-400",
   },
   fair: {
-    bg: "bg-green-100",
-    text: "text-green-800",
-    border: "border-green-300",
+    bg: "bg-emerald-50",
+    text: "text-emerald-700",
+    border: "border-emerald-300",
+    bar: "bg-emerald-500",
   },
   slightly_high: {
-    bg: "bg-yellow-100",
-    text: "text-yellow-800",
-    border: "border-yellow-300",
+    bg: "bg-amber-50",
+    text: "text-amber-700",
+    border: "border-amber-300",
+    bar: "bg-amber-400",
   },
   high: {
-    bg: "bg-orange-100",
-    text: "text-orange-800",
+    bg: "bg-orange-50",
+    text: "text-orange-700",
     border: "border-orange-300",
+    bar: "bg-orange-500",
   },
   very_high: {
-    bg: "bg-red-100",
-    text: "text-red-800",
-    border: "border-red-300",
+    bg: "bg-rose-50",
+    text: "text-rose-700",
+    border: "border-rose-300",
+    bar: "bg-rose-500",
   },
 };
+
+export const stepLabels = ["車両選択", "見積入力", "診断結果"] as const;

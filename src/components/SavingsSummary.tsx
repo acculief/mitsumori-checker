@@ -9,38 +9,52 @@ interface Props {
 }
 
 export default function SavingsSummary({ summary }: Props) {
+  const fairCount = summary.items.filter(
+    (i) => i.verdict === "cheap" || i.verdict === "fair"
+  ).length;
+  const warnCount = summary.items.length - fairCount;
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      <div className="rounded-lg bg-white border border-slate-200 p-4 text-center">
-        <div className="text-xs text-slate-500 mb-1">見積もり合計</div>
-        <div className="text-xl font-bold text-slate-800">
-          {formatYen(summary.totalAmount)}
+    <div className="grid grid-cols-3 gap-3 animate-fade-in-up-delay-1">
+      <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm">
+        <div className="text-xs text-[#64748b] mb-1">診断項目数</div>
+        <div className="text-2xl font-bold text-[#1a2332]">
+          {summary.items.length}
+          <span className="text-sm font-normal text-[#64748b] ml-0.5">件</span>
         </div>
       </div>
-      <div className="rounded-lg bg-white border border-slate-200 p-4 text-center">
-        <div className="text-xs text-slate-500 mb-1">相場合計（中央値）</div>
-        <div className="text-xl font-bold text-slate-800">
-          {formatYen(summary.totalMedian)}
+      <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm">
+        <div className="text-xs text-[#64748b] mb-1">適正価格</div>
+        <div className="text-2xl font-bold text-emerald-600">
+          {fairCount}
+          <span className="text-sm font-normal text-[#64748b] ml-0.5">件</span>
         </div>
       </div>
-      <div
-        className={`rounded-lg border p-4 text-center ${
-          summary.potentialSaving > 0
-            ? "bg-red-50 border-red-200"
-            : "bg-green-50 border-green-200"
-        }`}
-      >
-        <div className="text-xs text-slate-500 mb-1">節約可能額</div>
-        <div
-          className={`text-xl font-bold ${
-            summary.potentialSaving > 0 ? "text-red-600" : "text-green-600"
-          }`}
-        >
-          {summary.potentialSaving > 0
-            ? `-${formatYen(summary.potentialSaving)}`
-            : formatYen(0)}
+      <div className="rounded-xl bg-white border border-slate-200 p-4 text-center shadow-sm">
+        <div className="text-xs text-[#64748b] mb-1">要確認</div>
+        <div className={`text-2xl font-bold ${warnCount > 0 ? "text-amber-600" : "text-slate-300"}`}>
+          {warnCount}
+          <span className="text-sm font-normal text-[#64748b] ml-0.5">件</span>
         </div>
       </div>
+
+      {summary.potentialSaving > 0 && (
+        <div className="col-span-3 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-4 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-xs text-amber-700 font-medium mb-0.5">
+                交渉で節約できる可能性
+              </div>
+              <div className="text-sm text-[#64748b]">
+                中央値まで交渉した場合の節約見込み額
+              </div>
+            </div>
+            <div className="text-2xl font-bold text-amber-700">
+              {formatYen(summary.potentialSaving)}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

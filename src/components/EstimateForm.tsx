@@ -27,22 +27,30 @@ export default function EstimateForm({
   const hasValidItem = items.some(
     (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
   );
+  const validCount = items.filter(
+    (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
+  ).length;
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
+    <div className="animate-fade-in-up">
+      <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-bold text-slate-800">
-            Step 2: 見積もり項目を入力
+          <h2 className="text-2xl font-bold text-[#1a2332]">
+            見積もり内容を入力
           </h2>
-          <p className="text-sm text-slate-500">
-            車両: {vehicleSizeLabels[vehicleSize]}
+          <p className="text-[#64748b] mt-1">
+            <span className="inline-flex items-center gap-1.5 bg-[#e0f5f5] text-[#0d7377] px-2.5 py-0.5 rounded-full text-sm font-medium">
+              {vehicleSizeLabels[vehicleSize]}
+            </span>
           </p>
         </div>
         <button
           onClick={onBack}
-          className="text-sm text-blue-600 hover:underline cursor-pointer"
+          className="flex items-center gap-1 text-sm text-[#64748b] hover:text-[#0d7377] transition-colors cursor-pointer"
         >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
           車両を変更
         </button>
       </div>
@@ -52,6 +60,7 @@ export default function EstimateForm({
           <EstimateItemRow
             key={item.uid}
             item={item}
+            vehicleSize={vehicleSize}
             usedIds={usedIds}
             onChange={onUpdateItem}
             onRemove={onRemoveItem}
@@ -60,22 +69,40 @@ export default function EstimateForm({
         ))}
       </div>
 
-      <div className="flex items-center justify-between mt-4">
-        <button
-          onClick={onAddItem}
-          className="text-sm text-blue-600 hover:underline cursor-pointer"
-        >
-          ＋ 項目を追加
-        </button>
+      <button
+        onClick={onAddItem}
+        className="mt-4 w-full py-3 rounded-xl border-2 border-dashed border-slate-300 text-sm font-medium text-[#64748b] hover:border-[#0d7377] hover:text-[#0d7377] hover:bg-[#f0fafa] transition-all cursor-pointer"
+      >
+        ＋ 項目を追加する
+      </button>
 
+      {/* Fixed bottom CTA on mobile, inline on desktop */}
+      <div className="mt-6 hidden sm:block">
         <button
           onClick={onSubmit}
           disabled={!hasValidItem}
-          className="px-6 py-2 rounded-md bg-blue-600 text-white font-medium text-sm hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#f28c28] to-[#e67e22] text-white font-bold text-base shadow-lg shadow-orange-200 hover:shadow-xl hover:shadow-orange-300 hover:-translate-y-0.5 disabled:opacity-40 disabled:shadow-none disabled:translate-y-0 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
-          診断する
+          {hasValidItem
+            ? `${validCount}件の項目を診断する`
+            : "項目と金額を入力してください"}
         </button>
       </div>
+
+      {/* Mobile fixed bottom */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-slate-200 sm:hidden z-50">
+        <button
+          onClick={onSubmit}
+          disabled={!hasValidItem}
+          className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#f28c28] to-[#e67e22] text-white font-bold text-base shadow-lg shadow-orange-200 disabled:opacity-40 disabled:shadow-none disabled:cursor-not-allowed transition-all cursor-pointer"
+        >
+          {hasValidItem
+            ? `${validCount}件の項目を診断する`
+            : "項目と金額を入力してください"}
+        </button>
+      </div>
+      {/* Spacer for mobile fixed button */}
+      <div className="h-20 sm:hidden" />
     </div>
   );
 }
