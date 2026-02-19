@@ -14,6 +14,7 @@ const siteDescription =
   "車検・自動車修理の見積もりを相場データと比較して「適正/高い」を無料判定。登録不要・個人情報不要。ぼったくり防止に。";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${siteName}｜車検の見積もりを相場と比較して無料診断`,
     template: `%s｜${siteName}`,
@@ -51,6 +52,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "0uJTSoLifNf9F30GBAdAstHG5n6Ci6kGC29csJZbdRM",
+  },
+  other: {
+    "theme-color": "#c2410c",
   },
   robots: {
     index: true,

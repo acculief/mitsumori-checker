@@ -173,7 +173,7 @@ export default function Home() {
             25項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
           <p className="text-[11px] text-slate-300 pt-1">
-            &copy; 2025 車検費用チェッカー
+            &copy; 2026 車検費用チェッカー
           </p>
         </div>
       </footer>

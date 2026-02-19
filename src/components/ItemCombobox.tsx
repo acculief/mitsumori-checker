@@ -168,19 +168,19 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
           className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 text-left flex items-center justify-between gap-2 hover:border-slate-300 transition-colors cursor-pointer"
         >
           <span className="truncate">{selectedItem.label}</span>
-          <span
-            role="button"
+          <button
+            type="button"
             aria-label="項目をクリア"
             onClick={(e) => {
               e.stopPropagation();
               handleClear();
             }}
-            className="shrink-0 text-slate-300 hover:text-slate-500"
+            className="shrink-0 text-slate-300 hover:text-slate-500 cursor-pointer"
           >
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-          </span>
+          </button>
         </button>
       ) : (
         <input
