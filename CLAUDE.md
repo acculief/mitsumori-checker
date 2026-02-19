@@ -17,7 +17,7 @@
 | `/` | シングルページ（3ステップフォーム: 車両選択→見積入力→診断結果） |
 
 ## データ構成
-- `src/data/market-rates.ts` — 相場データベース（23項目 × 4車両サイズ × low/median/high）
+- `src/data/market-rates.ts` — 相場データベース（25項目 × 4車両サイズ × low/median/high）
 - `src/lib/types.ts` — 全TypeScript型定義
 - `src/lib/compare.ts` — 価格比較ロジック（5段階判定）
 - `src/lib/constants.ts` — ラベル・色・アイコン定数

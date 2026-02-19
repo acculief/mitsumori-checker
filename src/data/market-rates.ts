@@ -257,4 +257,26 @@ export const marketRates: MarketRateItem[] = [
       large:  { low: 5500, median: 9000, high: 14000 },
     },
   },
+  {
+    id: "rear_glass",
+    label: "リアガラス（バックガラス）交換",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 30000, median: 55000, high: 80000 },
+      small:  { low: 40000, median: 65000, high: 90000 },
+      medium: { low: 50000, median: 75000, high: 100000 },
+      large:  { low: 60000, median: 85000, high: 120000 },
+    },
+  },
+  {
+    id: "side_glass",
+    label: "サイドガラス交換（ドアガラス1枚）",
+    category: "maintenance",
+    rates: {
+      kei:    { low: 18000, median: 28000, high: 45000 },
+      small:  { low: 22000, median: 35000, high: 55000 },
+      medium: { low: 28000, median: 42000, high: 65000 },
+      large:  { low: 35000, median: 52000, high: 80000 },
+    },
+  },
 ];
