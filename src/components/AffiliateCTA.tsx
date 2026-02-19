@@ -7,34 +7,32 @@ interface Props {
 export default function AffiliateCTA({ hasExpensiveItems }: Props) {
   return (
     <section
-      className="rounded-xl bg-gradient-to-br from-teal-50 via-white to-orange-50 border border-slate-200 p-5 shadow-sm animate-fade-in-up-delay-1"
+      className="rounded-xl bg-white border border-slate-200 p-5 animate-fade-in-up-delay-1"
       aria-label="車検予約サービスの紹介"
     >
-      {/* ヘッダー */}
       <div className="mb-4">
-        <h3 className="font-bold text-[#1a2332] text-base mb-1">
+        <h3 className="font-bold text-slate-900 text-sm mb-0.5">
           {hasExpensiveItems
             ? "この見積もり、他店と比べてみませんか？"
             : "適正価格でも相見積もりは安心材料になります"}
         </h3>
-        <p className="text-sm text-[#64748b]">
+        <p className="text-xs text-slate-500">
           {hasExpensiveItems
             ? "複数の店舗で見積もりを取ることで、交渉材料が増えます。"
             : "他店の価格を知っておくと、次回の車検でも安心です。"}
         </p>
       </div>
 
-      {/* サービスカード */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         {affiliateServices.map((service) => (
           <div
             key={service.id}
-            className="rounded-lg border border-slate-200 bg-white p-4 flex flex-col"
+            className="rounded-lg border border-slate-200 p-3 flex flex-col"
           >
-            <div className="font-bold text-sm text-[#1a2332] mb-1">
+            <div className="font-bold text-xs text-slate-900 mb-0.5">
               {service.name}
             </div>
-            <p className="text-xs text-[#64748b] mb-3 flex-1">
+            <p className="text-[11px] text-slate-500 mb-2.5 flex-1">
               {service.description}
             </p>
             <a
@@ -42,7 +40,7 @@ export default function AffiliateCTA({ hasExpensiveItems }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${service.name}で詳しく見る`}
-              className="block w-full text-center py-2 rounded-lg text-sm font-bold border-2 border-[#0d7377] text-[#0d7377] hover:bg-[#0d7377] hover:text-white transition-all"
+              className="block w-full text-center py-2 rounded-md text-xs font-bold bg-[#0d7377] text-white hover:bg-[#095b5e] transition-colors"
             >
               詳しく見る
             </a>
@@ -50,7 +48,7 @@ export default function AffiliateCTA({ hasExpensiveItems }: Props) {
         ))}
       </div>
 
-      <p className="text-[11px] text-[#94a3b8] mt-3">
+      <p className="text-[11px] text-slate-400 mt-3">
         ※ 外部サイトへ遷移します。当サイトは各サービスの運営元とは独立しています。
       </p>
     </section>

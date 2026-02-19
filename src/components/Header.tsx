@@ -1,19 +1,20 @@
 export default function Header() {
   return (
-    <header className="bg-gradient-to-r from-[#0d7377] to-[#14919b] shadow-md">
-      <div className="max-w-3xl mx-auto px-4 py-5">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl backdrop-blur-sm" aria-hidden="true">
-            🔍
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
-              見積もりチェッカー
-            </h1>
-            <p className="text-sm text-white/75">
-              車検・自動車修理の見積もりを相場とかんたん比較
-            </p>
-          </div>
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
+      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="w-9 h-9 rounded-lg bg-[#0d7377] flex items-center justify-center" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 12l2 2 4-4" />
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+        </div>
+        <div>
+          <h1 className="text-base font-bold text-slate-900 leading-tight">
+            見積もりチェッカー
+          </h1>
+          <p className="text-xs text-slate-500">
+            車検費用を相場データで無料診断
+          </p>
         </div>
       </div>
     </header>

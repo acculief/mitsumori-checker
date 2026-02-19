@@ -1,23 +1,17 @@
 import { Verdict } from "@/lib/types";
-import { verdictLabels, verdictColors, verdictEmoji } from "@/lib/constants";
+import { verdictLabels, verdictColors } from "@/lib/constants";
 
 interface Props {
   verdict: Verdict;
-  size?: "sm" | "md";
 }
 
-export default function ResultBadge({ verdict, size = "sm" }: Props) {
+export default function ResultBadge({ verdict }: Props) {
   const c = verdictColors[verdict];
-  const sizeClass =
-    size === "md"
-      ? "px-3 py-1 text-sm"
-      : "px-2.5 py-0.5 text-xs";
 
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full font-bold border ${sizeClass} ${c.bg} ${c.text} ${c.border}`}
+      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold border ${c.bg} ${c.text} ${c.border}`}
     >
-      <span aria-hidden="true">{verdictEmoji[verdict]}</span>
       {verdictLabels[verdict]}
     </span>
   );

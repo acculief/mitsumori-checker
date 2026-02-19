@@ -9,12 +9,50 @@ import {
 
 const sizes: VehicleSize[] = ["kei", "small", "medium", "large"];
 
-const sizeIllustrations: Record<VehicleSize, { icon: string; scale: string }> = {
-  kei:    { icon: "🚗", scale: "text-4xl" },
-  small:  { icon: "🚙", scale: "text-4xl" },
-  medium: { icon: "🚐", scale: "text-5xl" },
-  large:  { icon: "🚛", scale: "text-5xl" },
-};
+/* SVG car silhouettes — distinct shape per size */
+function CarIcon({ size }: { size: VehicleSize }) {
+  const cls = "text-slate-400 group-hover:text-[#0d7377] transition-colors";
+  switch (size) {
+    case "kei":
+      return (
+        <svg width="48" height="28" viewBox="0 0 48 28" fill="none" className={cls}>
+          <rect x="6" y="8" width="36" height="14" rx="3" stroke="currentColor" strokeWidth="1.5" />
+          <rect x="10" y="3" width="20" height="8" rx="2" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="14" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="34" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case "small":
+      return (
+        <svg width="52" height="28" viewBox="0 0 52 28" fill="none" className={cls}>
+          <rect x="4" y="10" width="44" height="12" rx="3" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M12 10L18 3H32L40 10" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <circle cx="14" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="38" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case "medium":
+      return (
+        <svg width="56" height="28" viewBox="0 0 56 28" fill="none" className={cls}>
+          <rect x="3" y="10" width="50" height="12" rx="3" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M10 10L17 2H36L46 10" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <circle cx="14" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="42" cy="24" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="25" y1="3" x2="25" y2="10" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+    case "large":
+      return (
+        <svg width="60" height="30" viewBox="0 0 60 30" fill="none" className={cls}>
+          <rect x="2" y="10" width="56" height="14" rx="3" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M8 10L14 2H42L52 10" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <circle cx="14" cy="26" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="46" cy="26" r="3" stroke="currentColor" strokeWidth="1.5" />
+          <line x1="26" y1="3" x2="26" y2="10" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
+  }
+}
 
 interface Props {
   selected: VehicleSize | null;
@@ -24,46 +62,46 @@ interface Props {
 export default function VehicleSelector({ selected, onSelect }: Props) {
   return (
     <div className="animate-fade-in-up">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-[#1a2332] mb-2">
-          あなたの車を選んでください
+      <div className="mb-6">
+        <h2 className="text-xl font-bold text-slate-900 mb-1">
+          車両サイズを選択
         </h2>
-        <p className="text-[#64748b]">
-          車検証に記載の排気量をもとにお選びください
+        <p className="text-sm text-slate-500">
+          車検証の排気量をもとにお選びください
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        {sizes.map((size, i) => {
-          const ill = sizeIllustrations[size];
+      <div className="grid grid-cols-2 gap-3">
+        {sizes.map((size) => {
           const isSelected = selected === size;
           return (
             <button
               key={size}
               onClick={() => onSelect(size)}
               aria-pressed={isSelected}
-              className={`group relative rounded-2xl border-2 p-5 text-center transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-lg ${
+              className={`group relative rounded-xl border p-4 text-left transition-all duration-150 cursor-pointer ${
                 isSelected
-                  ? "border-[#0d7377] bg-[#e0f5f5] shadow-md ring-2 ring-[#0d7377]/20"
-                  : "border-slate-200 bg-white hover:border-[#0d7377]/40 hover:bg-[#f0fafa]"
+                  ? "border-[#0d7377] bg-[#f0fafa] ring-1 ring-[#0d7377]/20"
+                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
               }`}
-              style={{ animationDelay: `${i * 80}ms` }}
             >
               {isSelected && (
-                <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#0d7377] text-white flex items-center justify-center text-xs animate-scale-in">
-                  ✓
+                <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#0d7377] text-white flex items-center justify-center">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
               )}
-              <div className={`${ill.scale} mb-2 transition-transform duration-200 group-hover:scale-110`} aria-hidden="true">
-                {ill.icon}
+              <div className="mb-3" aria-hidden="true">
+                <CarIcon size={size} />
               </div>
-              <div className="font-bold text-lg text-[#1a2332]">
+              <div className="font-bold text-sm text-slate-900">
                 {vehicleSizeLabels[size]}
               </div>
-              <div className="text-sm font-medium text-[#0d7377] mt-0.5">
+              <div className="text-xs font-medium text-[#0d7377]">
                 {vehicleSizeDescriptions[size]}
               </div>
-              <div className="text-xs text-[#94a3b8] mt-2 leading-relaxed">
+              <div className="text-[11px] text-slate-400 mt-1.5 pt-1.5 border-t border-slate-100 leading-relaxed">
                 {vehicleSizeExamples[size]}
               </div>
             </button>

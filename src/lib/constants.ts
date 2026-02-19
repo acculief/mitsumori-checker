@@ -29,14 +29,6 @@ export const verdictLabels: Record<Verdict, string> = {
   very_high: "非常に高い",
 };
 
-export const verdictEmoji: Record<Verdict, string> = {
-  cheap: "✨",
-  fair: "✅",
-  slightly_high: "⚠️",
-  high: "🔶",
-  very_high: "🚨",
-};
-
 export const verdictColors: Record<
   Verdict,
   { bg: string; text: string; border: string; bar: string }

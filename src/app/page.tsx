@@ -21,32 +21,33 @@ export default function Home() {
       : null;
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
       <Header />
 
-      <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+      <main className="flex-1 max-w-xl mx-auto w-full px-4 py-6">
         {/* Step indicator */}
-        <nav className="mb-8" aria-label="診断ステップ">
-          <div className="flex items-center justify-between max-w-xs mx-auto">
+        <nav className="mb-6" aria-label="診断ステップ">
+          <div className="flex items-center justify-between max-w-[240px] mx-auto">
             {stepLabels.map((label, i) => {
               const stepNum = i + 1;
               const isActive = store.step >= stepNum;
               const isComplete = store.step > stepNum;
+              const isCurrent = store.step === stepNum;
               return (
                 <div key={label} className="flex items-center gap-0 flex-1 last:flex-none">
                   <div className="flex flex-col items-center gap-1">
                     <div
-                      aria-current={isActive && !isComplete ? "step" : undefined}
-                      className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                      aria-current={isCurrent ? "step" : undefined}
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                         isComplete
-                          ? "bg-[#0d7377] text-white shadow-md shadow-[#0d7377]/30"
+                          ? "bg-[#0d7377] text-white"
                           : isActive
-                            ? "bg-[#0d7377] text-white shadow-md shadow-[#0d7377]/30 ring-4 ring-[#0d7377]/10"
+                            ? "bg-[#0d7377] text-white ring-2 ring-[#0d7377]/20"
                             : "bg-slate-200 text-slate-400"
                       }`}
                     >
                       {isComplete ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                           <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       ) : (
@@ -54,7 +55,7 @@ export default function Home() {
                       )}
                     </div>
                     <span
-                      className={`text-xs font-medium ${
+                      className={`text-[11px] font-medium ${
                         isActive ? "text-[#0d7377]" : "text-slate-400"
                       }`}
                     >
@@ -63,7 +64,7 @@ export default function Home() {
                   </div>
                   {i < stepLabels.length - 1 && (
                     <div
-                      className={`flex-1 h-0.5 mx-2 mt-[-18px] rounded-full transition-all duration-500 ${
+                      className={`flex-1 h-px mx-1.5 mt-[-16px] ${
                         isComplete ? "bg-[#0d7377]" : "bg-slate-200"
                       }`}
                     />
@@ -76,10 +77,30 @@ export default function Home() {
 
         {/* Step 1: Vehicle selection */}
         {store.step === 1 && (
-          <VehicleSelector
-            selected={store.vehicleSize}
-            onSelect={store.selectVehicle}
-          />
+          <div>
+            <VehicleSelector
+              selected={store.vehicleSize}
+              onSelect={store.selectVehicle}
+            />
+            {/* Trust signals */}
+            <div className="mt-8 grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div className="text-lg font-bold text-slate-900">15</div>
+                <div className="text-[11px] text-slate-500">診断対応項目</div>
+              </div>
+              <div>
+                <div className="text-lg font-bold text-slate-900">4</div>
+                <div className="text-[11px] text-slate-500">車両サイズ</div>
+              </div>
+              <div>
+                <div className="text-lg font-bold text-slate-900">無料</div>
+                <div className="text-[11px] text-slate-500">登録不要</div>
+              </div>
+            </div>
+            <p className="text-center text-xs text-slate-400 mt-4">
+              全国の車検・整備工場の一般的な価格帯をもとにした相場データで診断します
+            </p>
+          </div>
         )}
 
         {/* Step 2: Estimate form */}
@@ -97,7 +118,7 @@ export default function Home() {
 
         {/* Step 3: Results */}
         {store.step === 3 && summary && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <VerdictHeader summary={summary} />
             <SavingsSummary summary={summary} />
 
@@ -108,24 +129,25 @@ export default function Home() {
             />
 
             <div>
-              <h3 className="font-bold text-[#1a2332] text-lg mb-3">
+              <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
+                <span className="w-1 h-4 bg-[#0d7377] rounded-full" aria-hidden="true" />
                 項目別の詳細比較
               </h3>
               <ResultsTable items={summary.items} />
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2 pt-2">
               <ShareButtons summary={summary} />
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 <button
                   onClick={store.backToForm}
-                  className="flex-1 py-3 rounded-xl border-2 border-[#0d7377] text-sm font-bold text-[#0d7377] hover:bg-[#e0f5f5] transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   見積もりを修正
                 </button>
                 <button
                   onClick={store.reset}
-                  className="flex-1 py-3 rounded-xl border-2 border-slate-200 text-sm font-bold text-[#64748b] hover:bg-slate-50 transition-all cursor-pointer"
+                  className="flex-1 py-2.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-400 hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   最初からやり直す
                 </button>
@@ -135,16 +157,16 @@ export default function Home() {
         )}
       </main>
 
-      <footer className="border-t border-slate-200 bg-white py-6 mt-8">
-        <div className="max-w-2xl mx-auto px-4 text-center space-y-2">
-          <p className="text-xs text-[#94a3b8]">
+      <footer className="border-t border-slate-200 bg-white py-5 mt-auto">
+        <div className="max-w-xl mx-auto px-4 text-center space-y-1.5">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
             ※ 相場データは全国の車検・整備工場の一般的な価格帯をもとに作成しています。
             地域・車種・年式により実際の費用は異なります。
           </p>
-          <p className="text-xs text-[#94a3b8]">
-            主要15項目 ・ 4車両サイズ ・ 価格レンジ3段階のデータベースで判定
+          <p className="text-[11px] text-slate-400">
+            15項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
-          <p className="text-xs text-[#94a3b8]">
+          <p className="text-[11px] text-slate-300 pt-1">
             &copy; 2025 見積もりチェッカー
           </p>
         </div>

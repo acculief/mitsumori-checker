@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f0f4f8;
-  --foreground: #1a2332;
+  --background: #f8fafc;
+  --foreground: #1e293b;
   --primary: #0d7377;
   --primary-dark: #095b5e;
   --primary-light: #e0f5f5;
@@ -25,16 +25,11 @@ body {
   color: var(--foreground);
 }
 
-/* Smooth transitions */
-* {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Count-up animation for numbers */
+/* Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -42,22 +37,10 @@ body {
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.4s ease-out both;
-}
-
-.animate-fade-in-up-delay-1 {
-  animation: fadeInUp 0.4s ease-out 0.1s both;
-}
-
-.animate-fade-in-up-delay-2 {
-  animation: fadeInUp 0.4s ease-out 0.2s both;
-}
-
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
@@ -65,20 +48,30 @@ body {
   }
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out both;
-}
-
-/* Range bar fill animation */
 @keyframes expandWidth {
   from { width: 0; }
 }
 
-.animate-expand {
-  animation: expandWidth 0.6s ease-out both;
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s ease-out both;
 }
 
-/* Respect reduced motion preferences */
+.animate-fade-in-up-delay-1 {
+  animation: fadeInUp 0.35s ease-out 0.08s both;
+}
+
+.animate-fade-in-up-delay-2 {
+  animation: fadeInUp 0.35s ease-out 0.16s both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out both;
+}
+
+.animate-expand {
+  animation: expandWidth 0.5s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .animate-fade-in-up-delay-1,
@@ -87,12 +80,4 @@ body {
   .animate-expand {
     animation: none;
   }
-}
-
-/* Gradient text */
-.text-gradient {
-  background: linear-gradient(135deg, #0d7377, #14919b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
