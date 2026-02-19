@@ -122,12 +122,6 @@ export default function Home() {
             <VerdictHeader summary={summary} />
             <SavingsSummary summary={summary} />
 
-            <AffiliateCTA
-              hasExpensiveItems={summary.items.some((i) =>
-                ["slightly_high", "high", "very_high"].includes(i.verdict)
-              )}
-            />
-
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
                 <span className="w-1 h-4 bg-[#c2410c] rounded-full" aria-hidden="true" />
@@ -135,6 +129,18 @@ export default function Home() {
               </h3>
               <ResultsTable items={summary.items} />
             </div>
+
+            <AffiliateCTA
+              hasExpensiveItems={summary.items.some((i) =>
+                ["slightly_high", "high", "very_high"].includes(i.verdict)
+              )}
+              potentialSaving={summary.potentialSaving}
+              expensiveCount={
+                summary.items.filter((i) =>
+                  ["slightly_high", "high", "very_high"].includes(i.verdict)
+                ).length
+              }
+            />
 
             <div className="space-y-2 pt-2">
               <ShareButtons summary={summary} />

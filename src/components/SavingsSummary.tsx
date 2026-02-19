@@ -1,5 +1,4 @@
 import { SummaryResult } from "@/lib/types";
-import { formatYen } from "@/lib/formatters";
 
 interface Props {
   summary: SummaryResult;
@@ -37,23 +36,9 @@ export default function SavingsSummary({ summary }: Props) {
         </div>
       </div>
 
-      {summary.potentialSaving > 0 && (
-        <div className="mt-2 rounded-lg border-l-4 border-amber-400 bg-white border-y border-r border-slate-200 p-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-xs font-medium text-amber-700">
-                交渉で節約できる可能性
-              </div>
-              <div className="text-[11px] text-slate-500">
-                中央値まで交渉した場合の見込み額
-              </div>
-            </div>
-            <div className="text-2xl font-bold text-amber-700 tabular-nums">
-              {formatYen(summary.potentialSaving)}
-            </div>
-          </div>
-        </div>
-      )}
+      <p className="text-[11px] text-slate-400 mt-2 text-center">
+        全国の整備工場の公開価格情報・業界統計をもとに算出 · 25項目対応 · 2026年2月更新
+      </p>
     </div>
   );
 }
