@@ -3,6 +3,7 @@
 import { marketRates } from "@/data/market-rates";
 import { EstimateItem, VehicleSize } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
+import ItemCombobox from "./ItemCombobox";
 
 interface Props {
   item: EstimateItem;
@@ -30,54 +31,12 @@ export default function EstimateItemRow({
     <div className="rounded-lg border border-slate-200 bg-white p-3.5">
       <div className="flex items-start gap-2">
         <div className="flex-1 min-w-0 space-y-2.5">
-          {/* Dropdown */}
-          <select
+          {/* Combobox */}
+          <ItemCombobox
             value={item.itemId}
-            onChange={(e) => onChange(item.uid, "itemId", e.target.value)}
-            aria-label="見積もり項目を選択"
-            className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4%206L8%2010L12%206%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[right_0.5rem_center] pr-8 focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent"
-          >
-            <option value="">-- 項目を選択 --</option>
-            <optgroup label="法定費用">
-              {marketRates
-                .filter((r) => r.category === "legal")
-                .map((rate) => (
-                  <option
-                    key={rate.id}
-                    value={rate.id}
-                    disabled={usedIds.has(rate.id) && item.itemId !== rate.id}
-                  >
-                    {rate.label}
-                  </option>
-                ))}
-            </optgroup>
-            <optgroup label="車検基本料">
-              {marketRates
-                .filter((r) => r.category === "inspection")
-                .map((rate) => (
-                  <option
-                    key={rate.id}
-                    value={rate.id}
-                    disabled={usedIds.has(rate.id) && item.itemId !== rate.id}
-                  >
-                    {rate.label}
-                  </option>
-                ))}
-            </optgroup>
-            <optgroup label="メンテナンス・部品交換">
-              {marketRates
-                .filter((r) => r.category === "maintenance")
-                .map((rate) => (
-                  <option
-                    key={rate.id}
-                    value={rate.id}
-                    disabled={usedIds.has(rate.id) && item.itemId !== rate.id}
-                  >
-                    {rate.label}
-                  </option>
-                ))}
-            </optgroup>
-          </select>
+            usedIds={usedIds}
+            onChange={(itemId) => onChange(item.uid, "itemId", itemId)}
+          />
 
           {/* Amount input */}
           <div className="relative">
