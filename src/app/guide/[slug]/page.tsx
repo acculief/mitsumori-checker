@@ -244,7 +244,7 @@ export default async function GuidePage({
                   </tbody>
                 </table>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2">
+              <p className="text-[11px] text-slate-500 mt-2">
                 ※ 工賃込みの金額です。地域・車種・年式により異なります。
               </p>
             </section>
@@ -361,7 +361,7 @@ export default async function GuidePage({
 
       <footer className="border-t border-slate-200 bg-white py-5 mt-auto">
         <div className="max-w-2xl mx-auto px-4 text-center space-y-1.5">
-          <p className="text-[11px] text-slate-400 leading-relaxed">
+          <p className="text-[11px] text-slate-500 leading-relaxed">
             ※ 相場データは全国の車検・整備工場の一般的な価格帯をもとに作成しています。
             地域・車種・年式により実際の費用は異なります。
           </p>

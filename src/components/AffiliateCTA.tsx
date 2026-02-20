@@ -70,7 +70,7 @@ export default function AffiliateCTA({
           ))}
         </div>
 
-        <p className="text-[11px] text-slate-400 mt-3">
+        <p className="text-[11px] text-slate-500 mt-3">
           見積もり依頼は無料です · 外部サイトへ遷移します
         </p>
       </div>

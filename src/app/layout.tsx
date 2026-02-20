@@ -86,6 +86,7 @@ const jsonLd = {
     "5段階判定",
     "完全無料・登録不要",
   ],
+  image: `${siteUrl}/opengraph-image`,
   screenshot: `${siteUrl}/opengraph-image`,
   inLanguage: "ja",
 };

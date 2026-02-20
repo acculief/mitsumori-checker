@@ -102,7 +102,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
               <div className="text-xs font-medium text-primary">
                 {vehicleSizeDescriptions[size]}
               </div>
-              <div className="text-[11px] text-slate-400 mt-1.5 pt-1.5 border-t border-slate-100 leading-relaxed">
+              <div className="text-[11px] text-slate-500 mt-1.5 pt-1.5 border-t border-slate-100 leading-relaxed">
                 {vehicleSizeExamples[size]}
               </div>
             </button>
@@ -110,7 +110,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
         })}
       </div>
 
-      <p className="text-[11px] text-slate-400 mt-4 text-center leading-relaxed">
+      <p className="text-[11px] text-slate-500 mt-4 text-center leading-relaxed">
         迷ったら車種名（例: N-BOX → 軽自動車、プリウス → 中型車）を参考に。
         <br />
         多少違っても診断結果に大きな差は出ません。

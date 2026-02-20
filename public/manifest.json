@@ -3,6 +3,7 @@
   "short_name": "車検チェッカー",
   "description": "車検・自動車修理の見積もりを相場データと比較して適正価格か無料診断",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#c2410c",

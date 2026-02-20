@@ -109,13 +109,13 @@ export default function VerdictHeader({ summary }: Props) {
       </div>
       <dl className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4">
         <div>
-          <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">見積もり合計</dt>
+          <dt className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">見積もり合計</dt>
           <dd className="text-2xl font-bold text-slate-900 tabular-nums">
             {formatYen(summary.totalAmount)}
           </dd>
         </div>
         <div>
-          <dt className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">相場中央値</dt>
+          <dt className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">相場中央値</dt>
           <dd className="text-lg font-medium text-slate-500 tabular-nums">
             {formatYen(summary.totalMedian)}
           </dd>

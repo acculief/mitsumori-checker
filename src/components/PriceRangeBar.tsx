@@ -16,10 +16,15 @@ export default function PriceRangeBar({ amount, range, verdict }: Props) {
   const highPercent = (range.high / displayMax) * 100;
   const c = verdictColors[verdict];
 
+  const srText = range.low === range.high
+    ? `見積もり${formatYen(amount)}、相場${formatYen(range.low)}（固定）`
+    : `見積もり${formatYen(amount)}、相場${formatYen(range.low)}〜${formatYen(range.high)}`;
+
   return (
     <div className="mt-2">
+      <span className="sr-only">{srText}</span>
       {/* Bar */}
-      <div className="relative h-2 rounded-full bg-slate-100 overflow-hidden">
+      <div className="relative h-2 rounded-full bg-slate-100 overflow-hidden" aria-hidden="true">
         {/* Fair zone */}
         <div
           className="absolute top-0 h-full bg-emerald-100/70"
@@ -32,7 +37,7 @@ export default function PriceRangeBar({ amount, range, verdict }: Props) {
         />
       </div>
       {/* Labels */}
-      <div className="relative mt-0.5 h-4 text-[11px] text-slate-400 tabular-nums">
+      <div className="relative mt-0.5 h-4 text-[11px] text-slate-500 tabular-nums" aria-hidden="true">
         {range.low === range.high ? (
           <span
             className="absolute"

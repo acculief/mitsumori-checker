@@ -224,11 +224,11 @@ export default function HomeClient({ seoContent }: Props) {
 
       <footer className="border-t border-slate-200 bg-white py-5 mt-auto">
         <div className="max-w-xl mx-auto px-4 text-center space-y-1.5">
-          <p className="text-[11px] text-slate-400 leading-relaxed">
+          <p className="text-[11px] text-slate-500 leading-relaxed">
             ※ 相場データは全国の車検・整備工場の一般的な価格帯をもとに作成しています。
             地域・車種・年式により実際の費用は異なります。
           </p>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-slate-500">
             25項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
           <p className="text-[11px] text-slate-500 pt-1">
