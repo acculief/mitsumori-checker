@@ -109,7 +109,7 @@ https://mitsumori-checker.vercel.app
 1. ✅ MVP完成（3ステップフォーム + 診断結果）
 2. ✅ リッチUI化（競合ベンチマーク反映）
 3. ✅ SEO基盤整備（metadata/openGraph/twitter/JSON-LD/動的サイトマップ/robots.txt/OGP画像）
-4. ✅ SEOコンテンツ追加（相場テーブル+FAQ7問+HowTo構造化データ / 個別ガイドページは未着手）
+4. ✅ SEOコンテンツ追加（相場テーブル+FAQ7問+HowTo+BreadcrumbList+ガイドFAQ自動生成）
 5. ✅ SNS共有機能（X共有 + LINE共有 + URLコピー）
 6. 🔲 GA4 / Search Console 連携
 7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA + UTMトラッキング）
