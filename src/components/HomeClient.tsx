@@ -179,6 +179,7 @@ export default function HomeClient({ seoContent }: Props) {
             onRemoveItem={store.removeItem}
             onSubmit={store.goToResults}
             onBack={store.backToVehicle}
+            onLoadOcrItems={store.loadOcrItems}
           />
         )}
 

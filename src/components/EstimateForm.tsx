@@ -2,9 +2,11 @@
 
 import { useMemo } from "react";
 import { EstimateItem, VehicleSize } from "@/lib/types";
+import { OcrExtractedItem } from "@/lib/ocr-types";
 import { vehicleSizeLabels } from "@/lib/constants";
 import { marketRates } from "@/data/market-rates";
 import EstimateItemRow from "./EstimateItemRow";
+import OcrUploader from "./OcrUploader";
 
 const MAX_ITEMS = marketRates.length;
 
@@ -16,6 +18,7 @@ interface Props {
   onRemoveItem: (uid: string) => void;
   onSubmit: () => void;
   onBack: () => void;
+  onLoadOcrItems: (items: OcrExtractedItem[]) => void;
 }
 
 export default function EstimateForm({
@@ -26,6 +29,7 @@ export default function EstimateForm({
   onRemoveItem,
   onSubmit,
   onBack,
+  onLoadOcrItems,
 }: Props) {
   const usedIds = useMemo(
     () => new Set(items.map((it) => it.itemId).filter(Boolean)),
@@ -68,6 +72,8 @@ export default function EstimateForm({
           変更
         </button>
       </div>
+
+      <OcrUploader onResult={onLoadOcrItems} />
 
       <p className="text-xs text-slate-500 mb-3 leading-relaxed">
         見積書の項目名で検索して選択し、金額を入力してください。「+ 項目を追加」で行を増やせます。

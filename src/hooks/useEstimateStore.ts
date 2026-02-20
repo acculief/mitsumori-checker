@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { VehicleSize, EstimateItem } from "@/lib/types";
+import { OcrExtractedItem } from "@/lib/ocr-types";
 import { trackEvent } from "@/lib/analytics";
 
 function genUid() {
@@ -103,6 +104,18 @@ export function useEstimateStore() {
     trackEvent("sample_load");
   }, [scrollToTop]);
 
+  const loadOcrItems = useCallback((ocrItems: OcrExtractedItem[]) => {
+    const newItems: EstimateItem[] = ocrItems.map((oi) => ({
+      uid: genUid(),
+      itemId: oi.itemId,
+      amount: oi.amount,
+      quantity: oi.quantity,
+    }));
+    setItems(newItems);
+    setIsSample(false);
+    trackEvent("ocr_items_loaded", { item_count: ocrItems.length });
+  }, []);
+
   return {
     vehicleSize,
     items,
@@ -117,5 +130,6 @@ export function useEstimateStore() {
     backToVehicle,
     reset,
     loadSample,
+    loadOcrItems,
   };
 }
