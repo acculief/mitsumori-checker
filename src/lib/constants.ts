@@ -2,6 +2,7 @@ import { VehicleSize, Verdict } from "./types";
 
 export const siteUrl = "https://mitsumori-checker.vercel.app";
 export const siteName = "車検費用チェッカー";
+export const siteLastModified = "2026-02-20";
 
 export const vehicleSizeLabels: Record<VehicleSize, string> = {
   kei: "軽自動車",

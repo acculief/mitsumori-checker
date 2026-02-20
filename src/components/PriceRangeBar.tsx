@@ -34,15 +34,33 @@ export default function PriceRangeBar({ amount, range, verdict }: Props) {
       {/* Labels */}
       <div className="relative mt-0.5 h-4 text-[11px] text-slate-400 tabular-nums">
         {range.low === range.high ? (
-          <span className="absolute" style={{ left: `${lowPercent}%`, transform: "translateX(-50%)" }}>
+          <span
+            className="absolute"
+            style={{
+              left: `${Math.max(10, Math.min(90, lowPercent))}%`,
+              transform: lowPercent < 15 ? "translateX(0)" : lowPercent > 85 ? "translateX(-100%)" : "translateX(-50%)",
+            }}
+          >
             固定 {formatYen(range.low)}
           </span>
         ) : (
           <>
-            <span className="absolute" style={{ left: `${lowPercent}%`, transform: "translateX(-50%)" }}>
+            <span
+              className="absolute"
+              style={{
+                left: `${Math.max(0, lowPercent)}%`,
+                transform: lowPercent < 10 ? "translateX(0)" : "translateX(-50%)",
+              }}
+            >
               {formatYen(range.low)}
             </span>
-            <span className="absolute" style={{ left: `${highPercent}%`, transform: "translateX(-50%)" }}>
+            <span
+              className="absolute"
+              style={{
+                left: `${Math.min(100, highPercent)}%`,
+                transform: highPercent > 85 ? "translateX(-100%)" : "translateX(-50%)",
+              }}
+            >
               {formatYen(range.high)}
             </span>
           </>

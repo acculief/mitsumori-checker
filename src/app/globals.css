@@ -95,5 +95,12 @@ body {
   .animate-scale-in,
   .animate-expand {
     animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
   }
 }

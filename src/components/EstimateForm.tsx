@@ -108,7 +108,7 @@ export default function EstimateForm({
             : "項目と金額を入力してください"}
         </button>
       </div>
-      <div className="h-20 sm:hidden" />
+      <div className="h-32 sm:hidden" />
     </form>
   );
 }

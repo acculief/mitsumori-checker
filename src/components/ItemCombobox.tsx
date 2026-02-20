@@ -211,6 +211,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
           aria-controls={listboxId}
           role="combobox"
           aria-autocomplete="list"
+          aria-activedescendant={highlightIndex >= 0 ? `${listboxId}-option-${highlightIndex}` : undefined}
           className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         />
       )}
@@ -243,6 +244,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
                     return (
                       <div
                         key={item.id}
+                        id={`${listboxId}-option-${flatIndex}`}
                         data-item-index={flatIndex}
                         role="option"
                         aria-selected={isSelected}
