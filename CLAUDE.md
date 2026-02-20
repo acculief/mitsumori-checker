@@ -22,8 +22,8 @@
 - `src/lib/types.ts` — 全TypeScript型定義
 - `src/lib/compare.ts` — 価格比較ロジック（5段階判定）
 - `src/lib/constants.ts` — ラベル・色・アイコン定数
-- `src/data/affiliate-links.ts` — アフィリエイト送客先データ（プレースホルダーURL）
-- `src/data/guide-content.ts` — ガイドページコンテンツ（25項目の解説・Tips・関連リンク）
+- `src/data/affiliate-links.ts` — アフィリエイト送客先データ（UTMパラメータ付き）
+- `src/data/guide-content.ts` — ガイドページコンテンツ（25項目の解説・Tips・関連リンク・ビルド時slug検証付き）
 
 ## コンポーネント構成
 - `HomeClient.tsx` — トップページの対話ロジック（Client Component）
