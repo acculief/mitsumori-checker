@@ -67,6 +67,11 @@ export async function POST(req: NextRequest): Promise<NextResponse<OcrApiRespons
 
     const items = parseOcrText(ocrText);
 
+    // デバッグ: 0件の場合はOCRテキストをログに出力（原因調査用）
+    if (items.length === 0) {
+      console.log("OCR text (0 items detected):", ocrText.substring(0, 500));
+    }
+
     return NextResponse.json({
       success: true,
       data: { items, vehicleSize: null },
