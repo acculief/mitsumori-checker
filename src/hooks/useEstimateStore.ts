@@ -49,20 +49,32 @@ export function useEstimateStore() {
     setItems((prev) => prev.filter((it) => it.uid !== uid));
   }, []);
 
-  const goToResults = useCallback(() => setStep(3), []);
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const goToResults = useCallback(() => {
+    setStep(3);
+    scrollToTop();
+  }, [scrollToTop]);
 
   const reset = useCallback(() => {
     setVehicleSize(null);
     setItems([emptyItem()]);
     setStep(1);
-  }, []);
+    scrollToTop();
+  }, [scrollToTop]);
 
-  const backToForm = useCallback(() => setStep(2), []);
+  const backToForm = useCallback(() => {
+    setStep(2);
+    scrollToTop();
+  }, [scrollToTop]);
 
   const backToVehicle = useCallback(() => {
     setVehicleSize(null);
     setStep(1);
-  }, []);
+    scrollToTop();
+  }, [scrollToTop]);
 
   return {
     vehicleSize,

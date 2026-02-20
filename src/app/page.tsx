@@ -106,6 +106,43 @@ export default function Home() {
             <p className="text-center text-xs text-slate-400 mt-4">
               全国の車検・整備工場の一般的な価格帯をもとにした相場データで診断します
             </p>
+
+            {/* SEO: 静的コンテンツ（クローラー向けキーワード） */}
+            <details className="mt-6 text-xs text-slate-500">
+              <summary className="cursor-pointer text-center text-slate-400 hover:text-slate-600 transition-colors">
+                診断できる25項目を見る
+              </summary>
+              <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 px-2">
+                <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">法定費用</div>
+                <span>自賠責保険料</span>
+                <span>自動車重量税</span>
+                <span>印紙代</span>
+                <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">車検基本料</div>
+                <span>車検基本料</span>
+                <span>24ヶ月点検整備</span>
+                <span>代車費用</span>
+                <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">メンテナンス・部品交換</div>
+                <span>エンジンオイル交換</span>
+                <span>オイルフィルター交換</span>
+                <span>ブレーキパッド交換（前）</span>
+                <span>ブレーキパッド交換（後）</span>
+                <span>ブレーキローター交換（前）</span>
+                <span>ブレーキローター交換（後）</span>
+                <span>ブレーキフルード交換</span>
+                <span>クーラント交換</span>
+                <span>ATF/CVTF交換</span>
+                <span>タイヤ交換</span>
+                <span>バッテリー交換</span>
+                <span>ワイパーゴム交換</span>
+                <span>エアクリーナー交換</span>
+                <span>スパークプラグ交換</span>
+                <span>タイミングベルト交換</span>
+                <span>ドライブシャフトブーツ交換</span>
+                <span>発炎筒交換</span>
+                <span>リアガラス交換</span>
+                <span>サイドガラス交換</span>
+              </div>
+            </details>
           </div>
         )}
 

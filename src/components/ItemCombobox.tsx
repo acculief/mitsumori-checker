@@ -59,7 +59,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
 
   // Close on outside click
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    function handleClickOutside(e: Event) {
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
@@ -69,7 +69,11 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   // Scroll highlighted item into view

@@ -77,6 +77,8 @@ export default function EstimateItemRow({
             <input
               type="number"
               inputMode="numeric"
+              min="0"
+              step="1"
               placeholder={qtyConfig && qty > 1 ? `${qty}${qtyConfig.unit}分の合計金額` : "金額を入力"}
               aria-label="見積もり金額"
               aria-describedby={range ? `hint-${item.uid}` : undefined}

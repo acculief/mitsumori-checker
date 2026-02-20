@@ -4,6 +4,7 @@ export function getOverallVerdict(
   totalAmount: number,
   totalMedian: number
 ): OverallVerdict {
+  if (totalMedian === 0) return "fair";
   const ratio = totalAmount / totalMedian;
   if (ratio <= 0.9) return "cheap";
   if (ratio <= 1.1) return "fair";

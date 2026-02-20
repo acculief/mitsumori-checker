@@ -28,14 +28,14 @@ export default function ResultsTable({ items }: Props) {
           </div>
 
           {/* Price comparison */}
-          <div className="flex items-baseline gap-4 text-sm">
-            <div>
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5 text-sm">
+            <div className="min-w-0">
               <span className="text-slate-500 text-xs">見積 </span>
               <span className="font-bold text-slate-900 tabular-nums">
                 {formatYen(item.amount)}
               </span>
             </div>
-            <div>
+            <div className="min-w-0">
               <span className="text-slate-500 text-xs">中央値 </span>
               <span className="font-medium text-slate-500 tabular-nums">
                 {formatYen(item.range.median)}

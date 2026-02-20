@@ -22,7 +22,7 @@ export default function SavingsSummary({ summary }: Props) {
           </div>
         </div>
         <div className="rounded-lg bg-white border border-slate-200 p-3 text-center">
-          <div className="text-[11px] font-medium text-slate-400 mb-0.5">適正価格</div>
+          <div className="text-[11px] font-medium text-slate-400 mb-0.5">割安・適正</div>
           <div className="text-xl font-bold text-emerald-600 tabular-nums">
             {fairCount}
             <span className="text-xs font-normal text-slate-400 ml-0.5">件</span>

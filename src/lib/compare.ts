@@ -9,9 +9,10 @@ import {
 } from "./types";
 
 function judge(amount: number, range: PriceRange): Verdict {
-  // 法定費用など固定価格の項目: 正確な金額なら「適正」
+  // 法定費用など固定価格の項目
   if (range.low === range.high) {
-    if (amount <= range.low) return "fair";
+    if (amount === range.low) return "fair";
+    if (amount < range.low) return "cheap";
     if (amount <= range.high * 1.3) return "high";
     return "very_high";
   }
@@ -36,7 +37,8 @@ export function compareEstimate(
 
     const baseRange = rateItem.rates[vehicleSize];
     const qty = item.quantity || 1;
-    const amount = Number(item.amount);
+    const amount = Math.round(Number(item.amount));
+    if (amount <= 0) continue;
 
     // 数量分をかけたレンジで比較
     const range: PriceRange = {

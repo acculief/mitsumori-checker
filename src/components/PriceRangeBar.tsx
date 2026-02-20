@@ -27,7 +27,7 @@ export default function PriceRangeBar({ amount, range, verdict }: Props) {
         />
         {/* Pin marker */}
         <div
-          className={`absolute top-0 h-full w-2 rounded-full ${c.bar} ring-1 ring-white animate-expand`}
+          className={`absolute top-0 h-full w-2 rounded-full ${c.bar} ring-1 ring-white animate-expand origin-left`}
           style={{ left: `${Math.max(0, pinPercent - 0.75)}%` }}
         />
       </div>

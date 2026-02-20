@@ -5,14 +5,18 @@ interface Props {
 }
 
 export default function Header({ onLogoClick }: Props) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onLogoClick?.();
+  };
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
-      <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-2.5">
-        <button
-          type="button"
-          onClick={onLogoClick}
-          className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity"
-          aria-label="トップに戻る"
+      <div className="max-w-2xl mx-auto px-4 py-3">
+        <a
+          href="/"
+          onClick={handleClick}
+          className="flex items-center gap-2.5 hover:opacity-80 transition-opacity w-fit"
         >
           <div className="shrink-0" aria-hidden="true">
             <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
@@ -26,7 +30,7 @@ export default function Header({ onLogoClick }: Props) {
               <path d="M24 11l2 2 4-4" stroke="#c2410c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <div className="text-left">
+          <div>
             <h1 className="text-base font-bold text-slate-900 leading-tight">
               車検費用チェッカー
             </h1>
@@ -34,7 +38,7 @@ export default function Header({ onLogoClick }: Props) {
               車検費用を相場データで無料診断
             </p>
           </div>
-        </button>
+        </a>
       </div>
     </header>
   );
