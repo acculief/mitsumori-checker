@@ -1,4 +1,7 @@
+"use client";
+
 import { affiliateServices } from "@/data/affiliate-links";
+import { trackEvent } from "@/lib/analytics";
 import { dataLastUpdated } from "@/data/market-rates";
 import { formatYen } from "@/lib/formatters";
 
@@ -62,6 +65,7 @@ export default function AffiliateCTA({
                 target="_blank"
                 rel="noopener noreferrer sponsored"
                 aria-label={`${service.name}で${service.ctaLabel}`}
+                onClick={() => trackEvent("cta_click", { service: service.id })}
                 className="block w-full text-center py-2 rounded-md text-xs font-bold bg-primary text-white hover:bg-primary-dark transition-colors"
               >
                 {service.ctaLabel}

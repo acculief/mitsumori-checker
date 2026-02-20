@@ -5,6 +5,7 @@ import { SummaryResult } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
 import { getOverallVerdict, overallVerdictLabels } from "@/lib/verdict-utils";
 import { siteUrl } from "@/lib/constants";
+import { trackEvent } from "@/lib/analytics";
 
 interface Props {
   summary: SummaryResult;
@@ -35,17 +36,20 @@ export default function ShareButtons({ summary }: Props) {
   const handleXShare = () => {
     const url = `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`;
     window.open(url, "_blank", "noopener,noreferrer,width=550,height=420");
+    trackEvent("share_click", { platform: "x" });
   };
 
   const handleLineShare = () => {
     const url = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(siteUrl)}&text=${encodeURIComponent(shareText)}`;
     window.open(url, "_blank", "noopener,noreferrer,width=550,height=520");
+    trackEvent("share_click", { platform: "line" });
   };
 
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(`${shareText}\n${siteUrl}`);
       setCopyStatus("copied");
+      trackEvent("share_click", { platform: "copy" });
     } catch {
       setCopyStatus("failed");
     } finally {

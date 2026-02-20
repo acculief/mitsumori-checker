@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { VehicleSize, EstimateItem } from "@/lib/types";
+import { trackEvent } from "@/lib/analytics";
 
 function genUid() {
   return crypto.randomUUID();
@@ -24,6 +25,7 @@ export function useEstimateStore() {
     setVehicleSize(size);
     setStep(2);
     scrollToTop();
+    trackEvent("vehicle_select", { vehicle_size: size });
   }, [scrollToTop]);
 
   const updateItem = useCallback(
@@ -35,7 +37,9 @@ export function useEstimateStore() {
             return { ...it, amount: value === "" ? "" : Number(value) };
           }
           if (field === "quantity") {
-            return { ...it, quantity: Math.max(1, Number(value)) };
+            const newQty = Math.max(1, Number(value));
+            if (newQty === it.quantity) return it;
+            return { ...it, quantity: newQty, amount: "" };
           }
           // itemId変更時は数量を1にリセット
           return { ...it, itemId: value, quantity: 1 };
@@ -56,7 +60,11 @@ export function useEstimateStore() {
   const goToResults = useCallback(() => {
     setStep(3);
     scrollToTop();
-  }, [scrollToTop]);
+    const validItems = items.filter(
+      (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
+    );
+    trackEvent("diagnosis_complete", { item_count: validItems.length });
+  }, [scrollToTop, items]);
 
   const reset = useCallback(() => {
     setVehicleSize(null);
