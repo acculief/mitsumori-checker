@@ -3,20 +3,15 @@
 import { useState } from "react";
 import { SummaryResult } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
+import { getOverallVerdict, overallVerdictLabels } from "@/lib/verdict-utils";
 
 interface Props {
   summary: SummaryResult;
 }
 
 function buildShareText(summary: SummaryResult): string {
-  const ratio = summary.totalAmount / summary.totalMedian;
-  let verdict: string;
-  if (ratio <= 0.9) verdict = "割安";
-  else if (ratio <= 1.1) verdict = "適正価格";
-  else if (ratio <= 1.3) verdict = "やや高め";
-  else verdict = "割高";
-
-  return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら「${verdict}」でした`;
+  const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
+  return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら「${overallVerdictLabels[verdict]}」でした`;
 }
 
 const siteUrl = "https://mitsumori-checker.vercel.app";

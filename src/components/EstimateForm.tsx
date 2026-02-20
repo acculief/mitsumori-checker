@@ -97,7 +97,7 @@ export default function EstimateForm({
       </div>
 
       {/* Mobile fixed CTA */}
-      <div className="fixed bottom-0 left-0 right-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-white/95 backdrop-blur-sm border-t border-slate-200 sm:hidden z-50">
+      <div className="fixed bottom-0 left-0 right-0 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] bg-white/95 backdrop-blur-sm border-t border-slate-200 sm:hidden z-[60]">
         <button
           type="submit"
           disabled={!hasValidItem}

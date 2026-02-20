@@ -53,7 +53,7 @@ export default function EstimateItemRow({
                       onClick={() =>
                         onChange(item.uid, "quantity", String(n))
                       }
-                      className={`px-2.5 py-1 text-xs font-medium transition-colors cursor-pointer ${
+                      className={`px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer active:scale-95 ${
                         qty === n
                           ? "bg-[#c2410c] text-white"
                           : "text-slate-600 hover:bg-slate-50"
@@ -109,8 +109,8 @@ export default function EstimateItemRow({
           type="button"
           onClick={() => onRemove(item.uid)}
           disabled={!canRemove}
-          className="shrink-0 mt-1.5 w-7 h-7 flex items-center justify-center rounded-md text-slate-300 hover:text-rose-500 hover:bg-rose-50 disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-          aria-label="この項目を削除"
+          className="shrink-0 mt-0.5 w-9 h-9 flex items-center justify-center rounded-md text-slate-300 hover:text-rose-500 hover:bg-rose-50 disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
+          aria-label={canRemove ? "この項目を削除" : "最後の項目は削除できません"}
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

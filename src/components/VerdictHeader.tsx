@@ -1,69 +1,62 @@
 import { SummaryResult } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
+import { getOverallVerdict, OverallVerdict } from "@/lib/verdict-utils";
 
 interface Props {
   summary: SummaryResult;
 }
 
-function getOverallMessage(summary: SummaryResult): {
+const verdictStyles: Record<OverallVerdict, {
   message: string;
-  sub: string;
+  subTemplate: (pct: number) => string;
   borderColor: string;
   iconBg: string;
   iconColor: string;
   icon: React.ReactNode;
-} {
-  const ratio = summary.totalAmount / summary.totalMedian;
-
-  if (ratio <= 0.9) {
-    return {
-      message: "この見積もりは相場より割安です",
-      sub: `相場中央値より ${Math.round((1 - ratio) * 100)}% 安い見積もりです。`,
-      borderColor: "border-sky-400",
-      iconBg: "bg-sky-50",
-      iconColor: "text-sky-600",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-          <polyline points="17 6 23 6 23 12" />
-        </svg>
-      ),
-    };
-  }
-  if (ratio <= 1.1) {
-    return {
-      message: "この見積もりは適正価格です",
-      sub: "相場の範囲内です。安心してお任せできます。",
-      borderColor: "border-emerald-400",
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-600",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M9 12l2 2 4-4" />
-          <circle cx="12" cy="12" r="10" />
-        </svg>
-      ),
-    };
-  }
-  if (ratio <= 1.3) {
-    return {
-      message: "この見積もりはやや高めです",
-      sub: `相場中央値より ${Math.round((ratio - 1) * 100)}% 高め。他社比較をおすすめします。`,
-      borderColor: "border-amber-400",
-      iconBg: "bg-amber-50",
-      iconColor: "text-amber-600",
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-          <line x1="12" y1="9" x2="12" y2="13" />
-          <line x1="12" y1="17" x2="12.01" y2="17" />
-        </svg>
-      ),
-    };
-  }
-  return {
+}> = {
+  cheap: {
+    message: "この見積もりは相場より割安です",
+    subTemplate: (pct) => `相場中央値より ${pct}% 安い見積もりです。`,
+    borderColor: "border-sky-400",
+    iconBg: "bg-sky-50",
+    iconColor: "text-sky-600",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+      </svg>
+    ),
+  },
+  fair: {
+    message: "この見積もりは適正価格です",
+    subTemplate: () => "相場の範囲内です。安心してお任せできます。",
+    borderColor: "border-emerald-400",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-600",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 12l2 2 4-4" />
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+    ),
+  },
+  slightly_high: {
+    message: "この見積もりはやや高めです",
+    subTemplate: (pct) => `相場中央値より ${pct}% 高め。他社比較をおすすめします。`,
+    borderColor: "border-amber-400",
+    iconBg: "bg-amber-50",
+    iconColor: "text-amber-600",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+        <line x1="12" y1="9" x2="12" y2="13" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    ),
+  },
+  high: {
     message: "この見積もりは相場より割高です",
-    sub: `相場中央値より ${Math.round((ratio - 1) * 100)}% 高い。相見積もりを取りましょう。`,
+    subTemplate: (pct) => `相場中央値より ${pct}% 高い。相見積もりを取りましょう。`,
     borderColor: "border-rose-400",
     iconBg: "bg-rose-50",
     iconColor: "text-rose-600",
@@ -74,6 +67,24 @@ function getOverallMessage(summary: SummaryResult): {
         <line x1="12" y1="16" x2="12.01" y2="16" />
       </svg>
     ),
+  },
+};
+
+function getOverallMessage(summary: SummaryResult) {
+  const ratio = summary.totalAmount / summary.totalMedian;
+  const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
+  const style = verdictStyles[verdict];
+  const pct = verdict === "cheap"
+    ? Math.round((1 - ratio) * 100)
+    : Math.round((ratio - 1) * 100);
+
+  return {
+    message: style.message,
+    sub: style.subTemplate(pct),
+    borderColor: style.borderColor,
+    iconBg: style.iconBg,
+    iconColor: style.iconColor,
+    icon: style.icon,
   };
 }
 
