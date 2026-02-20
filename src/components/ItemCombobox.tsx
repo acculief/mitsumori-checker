@@ -205,7 +205,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
         <div
           ref={listRef}
           role="listbox"
-          className="absolute z-40 left-0 right-0 mt-1 max-h-60 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-xl"
+          className="absolute z-[70] left-0 right-0 mt-1 max-h-60 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-xl"
         >
           {flatItems.length === 0 ? (
             <div className="px-3 py-4 text-sm text-slate-400 text-center">

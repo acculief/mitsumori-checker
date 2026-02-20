@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc]">
-      <Header />
+      <Header onLogoClick={store.reset} />
 
       <main className="flex-1 max-w-xl mx-auto w-full px-4 py-6">
         {/* Step indicator */}
