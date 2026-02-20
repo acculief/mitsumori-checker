@@ -116,3 +116,4 @@ https://mitsumori-checker.vercel.app
 8. 🔲 PWA対応（manifest.json✅ / Service Worker未 / オフライン未）
 9. 🔲 相見積もり機能（複数店舗の見積もりを並列比較）
 10. ✅ 項目別ガイドページ（25ページ /guide/[slug]/ 静的生成 + カテゴリ別ナビ + 内部リンクメッシュ）
+11. ✅ サンプル見積もり体験（手ぶらでツールの価値を即体験 → 初回離脱防止）
