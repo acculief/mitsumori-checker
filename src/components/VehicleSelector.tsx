@@ -67,7 +67,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
           車両サイズを選択
         </h2>
         <p className="text-sm text-slate-500">
-          車検証の排気量をもとにお選びください
+          車検証の排気量、または車種名を参考にお選びください
         </p>
       </div>
 
@@ -108,6 +108,12 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
           );
         })}
       </div>
+
+      <p className="text-[11px] text-slate-400 mt-4 text-center leading-relaxed">
+        迷ったら車種名（例: N-BOX → 軽自動車、プリウス → 中型車）を参考に。
+        <br />
+        多少違っても診断結果に大きな差は出ません。
+      </p>
     </div>
   );
 }
