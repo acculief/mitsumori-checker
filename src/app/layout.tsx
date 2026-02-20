@@ -79,6 +79,14 @@ const jsonLd = {
     price: "0",
     priceCurrency: "JPY",
   },
+  featureList: [
+    "車検費用の相場比較",
+    "25項目対応",
+    "4車両サイズ対応",
+    "5段階判定",
+    "完全無料・登録不要",
+  ],
+  screenshot: `${siteUrl}/opengraph-image`,
   inLanguage: "ja",
 };
 

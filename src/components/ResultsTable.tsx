@@ -9,9 +9,9 @@ interface Props {
 
 export default function ResultsTable({ items }: Props) {
   return (
-    <div className="space-y-2">
+    <ul className="space-y-2" aria-label={`診断結果 全${items.length}件`}>
       {items.map((item, i) => (
-        <div
+        <li
           key={`${item.itemId}-${i}`}
           className="rounded-lg border border-slate-200 bg-white p-3.5 animate-fade-in-up"
           style={{ animationDelay: `${Math.min(i, 5) * 50}ms` }}
@@ -63,8 +63,8 @@ export default function ResultsTable({ items }: Props) {
             range={item.range}
             verdict={item.verdict}
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
