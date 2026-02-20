@@ -20,11 +20,15 @@ const verdictEmoji: Record<ReturnType<typeof getOverallVerdict>, string> = {
 function buildShareText(summary: SummaryResult): string {
   const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
   const emoji = verdictEmoji[verdict];
-  return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら${emoji}「${overallVerdictLabels[verdict]}」でした\n\n#車検費用チェッカー #車検`;
+  const itemCount = summary.items.length;
+  const savingPart = summary.potentialSaving > 0
+    ? `（節約余地${formatYen(summary.potentialSaving)}）`
+    : "";
+  return `車検の見積もり${formatYen(summary.totalAmount)}（${itemCount}項目）を診断したら${emoji}「${overallVerdictLabels[verdict]}」でした${savingPart}\n\n#車検費用チェッカー #車検`;
 }
 
 export default function ShareButtons({ summary }: Props) {
-  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
 
   const shareText = buildShareText(summary);
 
@@ -41,10 +45,11 @@ export default function ShareButtons({ summary }: Props) {
   const handleCopyUrl = async () => {
     try {
       await navigator.clipboard.writeText(`${shareText}\n${siteUrl}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopyStatus("copied");
     } catch {
-      // Clipboard API not available
+      setCopyStatus("failed");
+    } finally {
+      setTimeout(() => setCopyStatus("idle"), 2000);
     }
   };
 
@@ -78,12 +83,19 @@ export default function ShareButtons({ summary }: Props) {
         className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
         aria-label="診断結果をコピーする"
       >
-        {copied ? (
+        {copyStatus === "copied" ? (
           <>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             コピー済
+          </>
+        ) : copyStatus === "failed" ? (
+          <>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            失敗
           </>
         ) : (
           <>

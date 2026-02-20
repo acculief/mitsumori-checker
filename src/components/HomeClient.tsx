@@ -200,12 +200,14 @@ export default function HomeClient({ seoContent }: Props) {
               <ShareButtons summary={summary} />
               <div className="flex gap-2">
                 <button
+                  type="button"
                   onClick={store.backToForm}
                   className="flex-1 py-2.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
                 >
                   見積もりを修正
                 </button>
                 <button
+                  type="button"
                   onClick={store.reset}
                   className="flex-1 py-2.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-400 hover:bg-slate-50 transition-colors cursor-pointer"
                 >

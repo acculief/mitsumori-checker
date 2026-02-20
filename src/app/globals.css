@@ -61,10 +61,6 @@ body {
   animation: fadeInUp 0.35s ease-out 0.08s both;
 }
 
-.animate-fade-in-up-delay-2 {
-  animation: fadeInUp 0.35s ease-out 0.16s both;
-}
-
 .animate-scale-in {
   animation: scaleIn 0.3s ease-out both;
 }
@@ -91,7 +87,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .animate-fade-in-up-delay-1,
-  .animate-fade-in-up-delay-2,
   .animate-scale-in,
   .animate-expand {
     animation: none;

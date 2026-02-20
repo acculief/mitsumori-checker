@@ -1,5 +1,5 @@
 import { CompareResult } from "@/lib/types";
-import { formatYen } from "@/lib/formatters";
+import { formatYen, formatYenDiff } from "@/lib/formatters";
 import ResultBadge from "./ResultBadge";
 import PriceRangeBar from "./PriceRangeBar";
 
@@ -51,8 +51,7 @@ export default function ResultsTable({ items }: Props) {
                       : "text-slate-400"
                 }`}
               >
-                {item.diffFromMedian > 0 ? "+" : ""}
-                {formatYen(item.diffFromMedian)}
+                {formatYenDiff(item.diffFromMedian)}
               </span>
             </div>
           </div>

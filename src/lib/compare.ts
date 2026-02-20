@@ -38,7 +38,7 @@ export function compareEstimate(
     const baseRange = rateItem.rates[vehicleSize];
     const qty = item.quantity || 1;
     const amount = Math.round(Number(item.amount));
-    if (amount <= 0) continue;
+    if (!isFinite(amount) || amount <= 0) continue;
 
     // 数量分をかけたレンジで比較
     const range: PriceRange = {

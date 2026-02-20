@@ -21,7 +21,7 @@ export default function AffiliateCTA({
         <h3 className="font-bold text-slate-900 text-sm">
           {hasExpensiveItems
             ? "次のステップ：相見積もりで確認する"
-            : "次のステップ"}
+            : "次のステップ：安心して車検を進める"}
         </h3>
       </div>
 
@@ -29,7 +29,7 @@ export default function AffiliateCTA({
         <p className="text-xs text-slate-600 leading-relaxed">
           {hasExpensiveItems
             ? "この診断は全国の整備工場の公開価格をもとにした目安です。正確な費用は、実際の工場から見積もりを取ることで確認できます。"
-            : "この見積もりは適正価格です。念のため他の工場の価格も確認しておくと、より安心して車検に臨めます。"}
+            : "この見積もりは相場範囲内です。口コミや実績で工場を選ぶと、より安心して車検を進められます。"}
         </p>
 
         {hasExpensiveItems && potentialSaving > 0 && (

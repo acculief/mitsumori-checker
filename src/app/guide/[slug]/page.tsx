@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { marketRates } from "@/data/market-rates";
 import { guideContents } from "@/data/guide-content";
 import { formatYen } from "@/lib/formatters";
-import { siteName, siteUrl, siteLastModified } from "@/lib/constants";
+import { siteName, siteUrl, sitePublishDate, siteLastModified } from "@/lib/constants";
 import type { VehicleSize } from "@/lib/types";
 
 const vehicleLabels: Record<VehicleSize, string> = {
@@ -95,7 +95,7 @@ export default async function GuidePage({
     headline: guide.title,
     description: guide.metaDescription,
     url: `${siteUrl}/guide/${slug}/`,
-    datePublished: "2026-02-20",
+    datePublished: sitePublishDate,
     dateModified: siteLastModified,
     author: { "@type": "Organization", name: siteName, url: siteUrl },
     publisher: { "@type": "Organization", name: siteName, url: siteUrl },

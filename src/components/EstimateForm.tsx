@@ -53,6 +53,7 @@ export default function EstimateForm({
           type="button"
           onClick={onBack}
           className="flex items-center gap-1 text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer py-2 px-1"
+          aria-label="車両サイズを変更する"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
