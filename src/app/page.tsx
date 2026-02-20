@@ -26,6 +26,9 @@ export default function Home() {
 
       <main className="flex-1 max-w-xl mx-auto w-full px-4 py-6">
         {/* Step indicator */}
+        <div className="sr-only" aria-live="polite" aria-atomic="true">
+          ステップ{store.step}: {stepLabels[store.step - 1]}
+        </div>
         <nav className="mb-6" aria-label="診断ステップ">
           <div className="flex items-center justify-between max-w-[240px] mx-auto">
             {stepLabels.map((label, i) => {

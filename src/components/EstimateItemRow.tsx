@@ -79,6 +79,7 @@ export default function EstimateItemRow({
               inputMode="numeric"
               placeholder={qtyConfig && qty > 1 ? `${qty}${qtyConfig.unit}分の合計金額` : "金額を入力"}
               aria-label="見積もり金額"
+              aria-describedby={range ? `hint-${item.uid}` : undefined}
               value={item.amount}
               onChange={(e) => onChange(item.uid, "amount", e.target.value)}
               className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -87,7 +88,7 @@ export default function EstimateItemRow({
 
           {/* Market rate hint */}
           {range && (
-            <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
+            <div id={`hint-${item.uid}`} className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
               <span className="text-[#c2410c] font-medium">相場</span>
               <span>
                 {formatYen(range.low * qty)} 〜 {formatYen(range.high * qty)}
