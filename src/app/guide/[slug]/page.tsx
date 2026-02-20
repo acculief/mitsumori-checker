@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { marketRates } from "@/data/market-rates";
-import { guideContents } from "@/data/guide-content";
+import { guideContents, guideCategories } from "@/data/guide-content";
 import { formatYen } from "@/lib/formatters";
 import { siteName, siteUrl, sitePublishDate, siteLastModified } from "@/lib/constants";
 import type { VehicleSize } from "@/lib/types";
@@ -320,6 +320,42 @@ export default async function GuidePage({
               </div>
             </section>
           )}
+          {/* Guide index by category */}
+          <nav className="mt-8 pt-6 border-t border-slate-200" aria-label="車検費用ガイド一覧">
+            <h2 className="text-base font-bold text-slate-900 mb-4">
+              他の車検費用ガイド
+            </h2>
+            <div className="space-y-3">
+              {guideCategories.map((cat) => (
+                <div key={cat.label}>
+                  <h3 className="text-xs font-bold text-slate-500 mb-1.5">{cat.label}</h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cat.slugs.map((s) => {
+                      const g = guideContents.find((gc) => gc.slug === s);
+                      if (!g) return null;
+                      const isCurrent = g.slug === slug;
+                      return isCurrent ? (
+                        <span
+                          key={s}
+                          className="inline-block text-[11px] px-2.5 py-1 rounded-full bg-primary/10 text-primary font-medium"
+                        >
+                          {g.title}
+                        </span>
+                      ) : (
+                        <Link
+                          key={s}
+                          href={`/guide/${s}/`}
+                          className="inline-block text-[11px] px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-primary/10 hover:text-primary transition-colors"
+                        >
+                          {g.title}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </nav>
         </article>
       </main>
 

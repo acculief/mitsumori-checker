@@ -79,7 +79,7 @@ export const guideContents: GuideContent[] = [
       "「車検基本料が安い＝整備が雑」とは限りません",
       "見積もりの内訳（点検料・検査料・事務手数料）を確認しましょう",
     ],
-    relatedSlugs: ["engine-oil", "brake-pad-front"],
+    relatedSlugs: ["stamp-fee", "engine-oil", "brake-pad-front"],
   },
   // ── メンテナンス ──
   {
@@ -132,7 +132,7 @@ export const guideContents: GuideContent[] = [
       "タイミングチェーン車なら基本的に交換不要です",
       "切れた場合のエンジン修理費は数十万円になるため、予防交換が重要",
     ],
-    relatedSlugs: ["v-belt", "engine-oil"],
+    relatedSlugs: ["v-belt", "spark-plug", "engine-oil"],
   },
   {
     slug: "brake-pad-front",
@@ -219,7 +219,7 @@ export const guideContents: GuideContent[] = [
       "プラグ本数＝エンジンの気筒数です（見積もりの個数を確認）",
       "交換後に燃費が改善することがあります",
     ],
-    relatedSlugs: ["engine-oil", "air-filter"],
+    relatedSlugs: ["battery", "engine-oil", "air-filter"],
   },
   {
     slug: "wiper-blade",
@@ -236,7 +236,7 @@ export const guideContents: GuideContent[] = [
       "カー用品店で自分で交換するのが最もコスパが良い",
       "1年に1回の交換が目安です",
     ],
-    relatedSlugs: ["coolant", "engine-oil"],
+    relatedSlugs: ["cabin-air-filter", "air-filter", "engine-oil"],
   },
   {
     slug: "coolant",
@@ -372,7 +372,7 @@ export const guideContents: GuideContent[] = [
       "破れを放置すると等速ジョイント交換（数万円）が必要に",
       "車検不合格の原因になるため、破れたら必ず交換が必要",
     ],
-    relatedSlugs: ["tire", "brake-pad-front"],
+    relatedSlugs: ["tire", "v-belt", "brake-pad-front"],
   },
   {
     slug: "tire",
@@ -445,13 +445,37 @@ export const guideContents: GuideContent[] = [
   },
 ];
 
-// Build-time validation: ensure all relatedSlugs reference existing guides
+export interface GuideCategory {
+  label: string;
+  slugs: string[];
+}
+
+export const guideCategories: GuideCategory[] = [
+  { label: "法定費用", slugs: ["jibaiseki", "weight-tax", "stamp-fee"] },
+  { label: "車検基本料", slugs: ["inspection-fee"] },
+  { label: "オイル・フルード", slugs: ["engine-oil", "oil-element", "brake-fluid", "coolant", "atf", "power-steering-fluid"] },
+  { label: "ブレーキ", slugs: ["brake-pad-front", "brake-pad-rear", "brake-rotor-front"] },
+  { label: "ベルト・駆動系", slugs: ["timing-belt", "v-belt", "spark-plug", "driveshaft-boot"] },
+  { label: "フィルター・消耗品", slugs: ["air-filter", "cabin-air-filter", "battery", "wiper-blade", "tire"] },
+  { label: "ガラス", slugs: ["windshield", "rear-glass", "side-glass"] },
+];
+
+// Build-time validation: ensure all relatedSlugs and category slugs reference existing guides
 const slugSet = new Set(guideContents.map((g) => g.slug));
 for (const guide of guideContents) {
   for (const related of guide.relatedSlugs) {
     if (!slugSet.has(related)) {
       throw new Error(
         `guide-content.ts: "${guide.slug}" references unknown relatedSlug "${related}"`
+      );
+    }
+  }
+}
+for (const cat of guideCategories) {
+  for (const s of cat.slugs) {
+    if (!slugSet.has(s)) {
+      throw new Error(
+        `guide-content.ts: category "${cat.label}" references unknown slug "${s}"`
       );
     }
   }
