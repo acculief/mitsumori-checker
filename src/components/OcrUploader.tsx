@@ -57,11 +57,16 @@ export default function OcrUploader({ onResult }: Props) {
         });
 
         if (!res.ok) {
-          let errorMsg = "サーバーエラーが発生しました。もう一度お試しください。";
-          try {
-            const errData: OcrApiResponse = await res.json();
-            if (!errData.success) errorMsg = errData.error;
-          } catch { /* JSONパース失敗時はデフォルトメッセージ */ }
+          let errorMsg: string;
+          if (res.status === 413) {
+            errorMsg = "ファイルサイズが大きすぎます。もう少し小さいファイルでお試しください。";
+          } else {
+            errorMsg = "サーバーエラーが発生しました。もう一度お試しください。";
+            try {
+              const errData: OcrApiResponse = await res.json();
+              if (!errData.success && errData.error) errorMsg = errData.error;
+            } catch { /* JSONパース失敗時はデフォルトメッセージ */ }
+          }
           setStatus("error");
           setMessage(errorMsg);
           trackEvent("ocr_upload_error", { error: `http_${res.status}` });

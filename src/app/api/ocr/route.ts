@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { parseOcrText } from "@/lib/ocr-parser";
 import type { OcrApiResponse } from "@/lib/ocr-types";
 
+// PDF処理は時間がかかるため余裕を持たせる
+export const maxDuration = 30;
+
 const MAX_BASE64_SIZE = 6 * 1024 * 1024; // 6MB（base64後）
 
 export async function POST(req: NextRequest): Promise<NextResponse<OcrApiResponse>> {
@@ -56,10 +59,10 @@ export async function POST(req: NextRequest): Promise<NextResponse<OcrApiRespons
     }
 
     if (!ocrText) {
-      return NextResponse.json({
-        success: false,
-        error: "テキストを読み取れませんでした。鮮明な写真で再度お試しください。",
-      });
+      return NextResponse.json(
+        { success: false, error: "テキストを読み取れませんでした。鮮明な写真で再度お試しください。" },
+        { status: 422 }
+      );
     }
 
     const items = parseOcrText(ocrText);
@@ -128,7 +131,6 @@ async function ocrPdf(base64Data: string, apiKey: string): Promise<string> {
             },
             features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
             imageContext: { languageHints: ["ja"] },
-            pages: [1, 2, 3, 4, 5],
           },
         ],
       }),
@@ -136,16 +138,29 @@ async function ocrPdf(base64Data: string, apiKey: string): Promise<string> {
   );
 
   if (!res.ok) {
-    console.error("Vision files API error:", res.status, await res.text());
-    throw new Error("PDFの読み取りに失敗しました。もう一度お試しください。");
+    const errText = await res.text().catch(() => "(response body unreadable)");
+    console.error("Vision files API error:", res.status, errText);
+    throw new Error("PDFの読み取りに失敗しました。別のファイルでお試しください。");
   }
 
   const data = await res.json();
+
+  // Vision APIがエラーを返す場合（レスポンス自体は200でもエラーが含まれることがある）
+  const apiError = data.responses?.[0]?.error;
+  if (apiError) {
+    console.error("Vision files API response error:", apiError);
+    throw new Error("このPDFは読み取れませんでした。画像として撮影するか、別のPDFでお試しください。");
+  }
 
   // 全ページのテキストを結合
   const pages = data.responses?.[0]?.responses ?? [];
   const texts: string[] = [];
   for (const page of pages) {
+    const apiPageError = page?.error;
+    if (apiPageError) {
+      console.error("Vision files API page error:", apiPageError);
+      continue; // エラーページはスキップして他のページを処理
+    }
     const text = page?.fullTextAnnotation?.text;
     if (text) texts.push(text);
   }
