@@ -1,5 +1,8 @@
 import { MarketRateItem } from "@/lib/types";
 
+/** 相場データの最終更新日（表示用） */
+export const dataLastUpdated = "2026年2月";
+
 /** 数量選択が可能な項目の設定 */
 export const quantityConfig: Record<string, { unit: string; max: number }> = {
   tire: { unit: "本", max: 4 },

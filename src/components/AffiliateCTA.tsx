@@ -59,7 +59,7 @@ export default function AffiliateCTA({
               <a
                 href={service.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer sponsored"
                 aria-label={`${service.name}で${service.ctaLabel}`}
                 className="block w-full text-center py-2 rounded-md text-xs font-bold bg-[#c2410c] text-white hover:bg-[#9a3412] transition-colors"
               >

@@ -59,6 +59,11 @@ export function useEstimateStore() {
 
   const backToForm = useCallback(() => setStep(2), []);
 
+  const backToVehicle = useCallback(() => {
+    setVehicleSize(null);
+    setStep(1);
+  }, []);
+
   return {
     vehicleSize,
     items,
@@ -69,6 +74,7 @@ export function useEstimateStore() {
     removeItem,
     goToResults,
     backToForm,
+    backToVehicle,
     reset,
   };
 }

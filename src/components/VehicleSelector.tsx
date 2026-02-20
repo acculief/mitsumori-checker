@@ -76,6 +76,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
           const isSelected = selected === size;
           return (
             <button
+              type="button"
               key={size}
               onClick={() => onSelect(size)}
               aria-pressed={isSelected}

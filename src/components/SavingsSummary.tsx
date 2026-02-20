@@ -1,4 +1,5 @@
 import { SummaryResult } from "@/lib/types";
+import { dataLastUpdated } from "@/data/market-rates";
 
 interface Props {
   summary: SummaryResult;
@@ -37,7 +38,7 @@ export default function SavingsSummary({ summary }: Props) {
       </div>
 
       <p className="text-[11px] text-slate-400 mt-2 text-center">
-        全国の整備工場の公開価格情報・業界統計をもとに算出 · 25項目対応 · 2026年2月更新
+        全国の整備工場の公開価格情報・業界統計をもとに算出 · 25項目対応 · {dataLastUpdated}更新
       </p>
     </div>
   );

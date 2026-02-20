@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
+import { siteUrl, siteName } from "@/lib/constants";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -7,9 +8,6 @@ const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700"],
   display: "swap",
 });
-
-const siteUrl = "https://mitsumori-checker.vercel.app";
-const siteName = "車検費用チェッカー";
 const siteDescription =
   "車検・自動車修理の見積もりを相場データと比較して「適正/高い」を無料判定。登録不要・個人情報不要。ぼったくり防止に。";
 
@@ -95,7 +93,7 @@ const faqJsonLd = {
       name: "車検の見積もりが高いかどうかはどう判断すればいいですか？",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "見積もり項目ごとに全国の整備工場の相場データと比較するのが最も確実です。車検費用チェッカーでは、各項目を「割安・適正・やや高い・高い・非常に高い」の5段階で判定します。相場中央値の1.1倍以内であれば適正、1.3倍を超えると割高と判断できます。",
+        text: "見積もり項目ごとに全国の整備工場の相場データと比較するのが最も確実です。車検費用チェッカーでは、各項目を「割安・適正・やや高い・高い・非常に高い」の5段階で判定します。相場中央値の1.1倍以内であれば適正、相場上限を超えると「やや高い」、相場上限の1.3倍を超えると「高い」と判断します。",
       },
     },
     {

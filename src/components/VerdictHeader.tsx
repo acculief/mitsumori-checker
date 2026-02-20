@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { SummaryResult } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
 import { getOverallVerdict, OverallVerdict } from "@/lib/verdict-utils";
@@ -12,7 +13,7 @@ const verdictStyles: Record<OverallVerdict, {
   borderColor: string;
   iconBg: string;
   iconColor: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }> = {
   cheap: {
     message: "この見積もりは相場より割安です",

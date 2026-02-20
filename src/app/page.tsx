@@ -50,9 +50,12 @@ export default function Home() {
                       }`}
                     >
                       {isComplete ? (
-                        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                          <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        <>
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          <span className="sr-only">完了</span>
+                        </>
                       ) : (
                         stepNum
                       )}
@@ -115,13 +118,14 @@ export default function Home() {
             onAddItem={store.addItem}
             onRemoveItem={store.removeItem}
             onSubmit={store.goToResults}
-            onBack={store.reset}
+            onBack={store.backToVehicle}
           />
         )}
 
         {/* Step 3: Results */}
         {store.step === 3 && summary && (
           <div className="space-y-4">
+            <h2 className="sr-only">診断結果</h2>
             <VerdictHeader summary={summary} />
             <SavingsSummary summary={summary} />
 
@@ -175,7 +179,7 @@ export default function Home() {
           <p className="text-[11px] text-slate-400">
             25項目 &middot; 4車両サイズ &middot; 価格レンジ3段階のデータベースで判定
           </p>
-          <p className="text-[11px] text-slate-300 pt-1">
+          <p className="text-[11px] text-slate-500 pt-1">
             &copy; 2026 車検費用チェッカー
           </p>
         </div>

@@ -9,6 +9,12 @@ import {
 } from "./types";
 
 function judge(amount: number, range: PriceRange): Verdict {
+  // 法定費用など固定価格の項目: 正確な金額なら「適正」
+  if (range.low === range.high) {
+    if (amount <= range.low) return "fair";
+    if (amount <= range.high * 1.3) return "high";
+    return "very_high";
+  }
   if (amount <= range.low) return "cheap";
   if (amount <= range.median * 1.1) return "fair";
   if (amount <= range.high) return "slightly_high";

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SummaryResult } from "@/lib/types";
 import { formatYen } from "@/lib/formatters";
 import { getOverallVerdict, overallVerdictLabels } from "@/lib/verdict-utils";
+import { siteUrl } from "@/lib/constants";
 
 interface Props {
   summary: SummaryResult;
@@ -13,8 +14,6 @@ function buildShareText(summary: SummaryResult): string {
   const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
   return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら「${overallVerdictLabels[verdict]}」でした`;
 }
-
-const siteUrl = "https://mitsumori-checker.vercel.app";
 
 export default function ShareButtons({ summary }: Props) {
   const [copied, setCopied] = useState(false);
