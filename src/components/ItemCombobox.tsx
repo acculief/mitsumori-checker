@@ -200,7 +200,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
           aria-haspopup="listbox"
           role="combobox"
           aria-autocomplete="list"
-          className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent"
+          className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         />
       )}
 
@@ -242,13 +242,13 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
                           disabled
                             ? "text-slate-300 cursor-not-allowed"
                             : isHighlighted
-                              ? "bg-[#fff2e6] text-slate-900"
+                              ? "bg-primary-light text-slate-900"
                               : "text-slate-700 hover:bg-slate-50"
-                        } ${isSelected ? "font-medium text-[#c2410c]" : ""}`}
+                        } ${isSelected ? "font-medium text-primary" : ""}`}
                       >
                         <span className="truncate">{item.label}</span>
                         {isSelected && (
-                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="shrink-0 text-[#c2410c]">
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="shrink-0 text-primary">
                             <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         )}

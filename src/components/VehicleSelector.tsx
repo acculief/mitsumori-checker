@@ -11,7 +11,7 @@ const sizes: VehicleSize[] = ["kei", "small", "medium", "large"];
 
 /* SVG car silhouettes — distinct shape per size */
 function CarIcon({ size }: { size: VehicleSize }) {
-  const cls = "text-slate-400 group-hover:text-[#c2410c] transition-colors";
+  const cls = "text-slate-400 group-hover:text-primary transition-colors";
   switch (size) {
     case "kei":
       return (
@@ -82,12 +82,12 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
               aria-pressed={isSelected}
               className={`group relative rounded-xl border p-4 text-left transition-all duration-150 cursor-pointer ${
                 isSelected
-                  ? "border-[#c2410c] bg-[#fff2e6] ring-1 ring-[#c2410c]/20"
+                  ? "border-primary bg-primary-light ring-1 ring-primary/20"
                   : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
               }`}
             >
               {isSelected && (
-                <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#c2410c] text-white flex items-center justify-center">
+                <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center">
                   <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                     <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -99,7 +99,7 @@ export default function VehicleSelector({ selected, onSelect }: Props) {
               <div className="font-bold text-sm text-slate-900">
                 {vehicleSizeLabels[size]}
               </div>
-              <div className="text-xs font-medium text-[#c2410c]">
+              <div className="text-xs font-medium text-primary">
                 {vehicleSizeDescriptions[size]}
               </div>
               <div className="text-[11px] text-slate-400 mt-1.5 pt-1.5 border-t border-slate-100 leading-relaxed">

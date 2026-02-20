@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     "車検費用チェッカー",
   ],
   authors: [{ name: siteName }],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: siteName,
+  },
   openGraph: {
     title: `${siteName}｜車検の見積もりを相場と比較して無料診断`,
     description: siteDescription,
@@ -54,6 +59,7 @@ export const metadata: Metadata = {
   other: {
     "theme-color": "#c2410c",
   },
+  manifest: "/manifest.json",
   robots: {
     index: true,
     follow: true,

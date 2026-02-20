@@ -21,7 +21,7 @@ export default function Home() {
       : null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc]">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Header onLogoClick={store.reset} />
 
       <main className="flex-1 max-w-xl mx-auto w-full px-4 py-6">
@@ -43,9 +43,9 @@ export default function Home() {
                       aria-current={isCurrent ? "step" : undefined}
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                         isComplete
-                          ? "bg-[#c2410c] text-white"
+                          ? "bg-primary text-white"
                           : isActive
-                            ? "bg-[#c2410c] text-white ring-2 ring-[#c2410c]/20"
+                            ? "bg-primary text-white ring-2 ring-primary/20"
                             : "bg-slate-200 text-slate-400"
                       }`}
                     >
@@ -62,7 +62,7 @@ export default function Home() {
                     </div>
                     <span
                       className={`text-[11px] font-medium ${
-                        isActive ? "text-[#c2410c]" : "text-slate-400"
+                        isActive ? "text-primary" : "text-slate-400"
                       }`}
                     >
                       {label}
@@ -71,7 +71,7 @@ export default function Home() {
                   {i < stepLabels.length - 1 && (
                     <div
                       className={`flex-1 h-px mx-1.5 mt-[-16px] ${
-                        isComplete ? "bg-[#c2410c]" : "bg-slate-200"
+                        isComplete ? "bg-primary" : "bg-slate-200"
                       }`}
                     />
                   )}
@@ -168,7 +168,7 @@ export default function Home() {
 
             <div>
               <h3 className="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
-                <span className="w-1 h-4 bg-[#c2410c] rounded-full" aria-hidden="true" />
+                <span className="w-1 h-4 bg-primary rounded-full" aria-hidden="true" />
                 項目別の詳細比較
               </h3>
               <ResultsTable items={summary.items} />

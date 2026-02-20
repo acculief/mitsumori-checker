@@ -109,6 +109,6 @@ https://mitsumori-checker.vercel.app
 5. ✅ SNS共有機能（X共有 + LINE共有 + URLコピー）
 6. 🔲 GA4 / Search Console 連携
 7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA）
-8. 🔲 PWA対応（オフライン利用、ホーム画面追加）
+8. 🔲 PWA対応（manifest.json✅ / Service Worker未 / オフライン未）
 9. 🔲 相見積もり機能（複数店舗の見積もりを並列比較）
 10. 🔲 項目別ガイドページ（コンテンツSEO）

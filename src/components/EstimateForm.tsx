@@ -52,7 +52,7 @@ export default function EstimateForm({
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-1 text-sm text-slate-500 hover:text-[#c2410c] transition-colors cursor-pointer py-2 px-1"
+          className="flex items-center gap-1 text-sm text-slate-500 hover:text-primary transition-colors cursor-pointer py-2 px-1"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M10 12L6 8L10 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -78,7 +78,7 @@ export default function EstimateForm({
       <button
         type="button"
         onClick={onAddItem}
-        className="mt-3 w-full py-2.5 rounded-lg border border-dashed border-slate-300 text-sm text-slate-500 hover:border-[#c2410c] hover:text-[#c2410c] hover:bg-[#fff2e6] transition-all cursor-pointer"
+        className="mt-3 w-full py-2.5 rounded-lg border border-dashed border-slate-300 text-sm text-slate-500 hover:border-primary hover:text-primary hover:bg-primary-light transition-all cursor-pointer"
       >
         + 項目を追加
       </button>
@@ -88,7 +88,7 @@ export default function EstimateForm({
         <button
           type="submit"
           disabled={!hasValidItem}
-          className="w-full py-3.5 rounded-xl bg-[#c2410c] text-white font-bold text-sm shadow-sm hover:bg-[#9a3412] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          className="w-full py-3.5 rounded-xl bg-primary text-white font-bold text-sm shadow-sm hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
         >
           {hasValidItem
             ? `${validCount}件の見積もりを診断する`
@@ -101,7 +101,7 @@ export default function EstimateForm({
         <button
           type="submit"
           disabled={!hasValidItem}
-          className="w-full py-3.5 rounded-xl bg-[#c2410c] text-white font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          className="w-full py-3.5 rounded-xl bg-primary text-white font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
         >
           {hasValidItem
             ? `${validCount}件の見積もりを診断する`

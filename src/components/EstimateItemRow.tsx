@@ -55,7 +55,7 @@ export default function EstimateItemRow({
                       }
                       className={`px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer active:scale-95 ${
                         qty === n
-                          ? "bg-[#c2410c] text-white"
+                          ? "bg-primary text-white"
                           : "text-slate-600 hover:bg-slate-50"
                       } ${n > 1 ? "border-l border-slate-200" : ""}`}
                       aria-label={`${n}${qtyConfig.unit}`}
@@ -84,14 +84,14 @@ export default function EstimateItemRow({
               aria-describedby={range ? `hint-${item.uid}` : undefined}
               value={item.amount}
               onChange={(e) => onChange(item.uid, "amount", e.target.value)}
-              className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-[#c2410c] focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>
 
           {/* Market rate hint */}
           {range && (
             <div id={`hint-${item.uid}`} className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
-              <span className="text-[#c2410c] font-medium">相場</span>
+              <span className="text-primary font-medium">相場</span>
               <span>
                 {formatYen(range.low * qty)} 〜 {formatYen(range.high * qty)}
               </span>

@@ -17,7 +17,7 @@ export default function AffiliateCTA({
       className="animate-fade-in-up-delay-1"
       aria-label="次のステップ"
     >
-      <div className="border-l-4 border-[#c2410c] pl-4 mb-3">
+      <div className="border-l-4 border-primary pl-4 mb-3">
         <h3 className="font-bold text-slate-900 text-sm">
           {hasExpensiveItems
             ? "次のステップ：相見積もりで確認する"
@@ -61,7 +61,7 @@ export default function AffiliateCTA({
                 target="_blank"
                 rel="noopener noreferrer sponsored"
                 aria-label={`${service.name}で${service.ctaLabel}`}
-                className="block w-full text-center py-2 rounded-md text-xs font-bold bg-[#c2410c] text-white hover:bg-[#9a3412] transition-colors"
+                className="block w-full text-center py-2 rounded-md text-xs font-bold bg-primary text-white hover:bg-primary-dark transition-colors"
               >
                 {service.ctaLabel}
               </a>
