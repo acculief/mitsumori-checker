@@ -103,6 +103,34 @@ export default async function GuidePage({
     inLanguage: "ja",
   };
 
+  // Auto-generate FAQ JSON-LD from market rate data
+  const faqEntries: { question: string; answer: string }[] = [];
+  if (rateItem) {
+    const itemName = rateItem.label;
+    const ranges = sizes.map((s) => `${vehicleLabels[s]}${formatYen(rateItem.rates[s].low)}〜${formatYen(rateItem.rates[s].high)}`);
+    faqEntries.push({
+      question: `${itemName}の費用はいくらですか？`,
+      answer: `${itemName}の費用相場は、${ranges.join("、")}です（工賃込み）。地域・車種・年式により異なります。`,
+    });
+  }
+  if (guide.tips.length > 0) {
+    const itemName = rateItem?.label ?? guide.title;
+    faqEntries.push({
+      question: `${itemName}で注意すべきことは？`,
+      answer: guide.tips.join("。") + "。",
+    });
+  }
+
+  const faqJsonLd = faqEntries.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqEntries.map((e) => ({
+      "@type": "Question",
+      name: e.question,
+      acceptedAnswer: { "@type": "Answer", text: e.answer },
+    })),
+  } : null;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <script
@@ -113,6 +141,12 @@ export default async function GuidePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
         <div className="max-w-2xl mx-auto px-4 py-3">

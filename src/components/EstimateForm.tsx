@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { EstimateItem, VehicleSize } from "@/lib/types";
 import { vehicleSizeLabels } from "@/lib/constants";
 import EstimateItemRow from "./EstimateItemRow";
@@ -23,7 +24,10 @@ export default function EstimateForm({
   onSubmit,
   onBack,
 }: Props) {
-  const usedIds = new Set(items.map((it) => it.itemId).filter(Boolean));
+  const usedIds = useMemo(
+    () => new Set(items.map((it) => it.itemId).filter(Boolean)),
+    [items]
+  );
   const hasValidItem = items.some(
     (it) => it.itemId !== "" && it.amount !== "" && Number(it.amount) > 0
   );

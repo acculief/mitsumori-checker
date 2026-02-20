@@ -183,6 +183,19 @@ const howToJsonLd = {
   totalTime: "PT2M",
 };
 
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: siteName,
+      item: siteUrl,
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -202,6 +215,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       </head>
       <body className={`${notoSansJP.className} antialiased`}>{children}</body>
