@@ -44,7 +44,26 @@ export default function OgImage() {
               gap: "16px",
             }}
           >
-            <span style={{ fontSize: "56px" }}>🔍</span>
+            <div
+              style={{
+                width: "64px",
+                height: "64px",
+                borderRadius: "14px",
+                background: "#c2410c",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <div style={{
+                width: "28px",
+                height: "28px",
+                borderBottom: "5px solid white",
+                borderRight: "5px solid white",
+                transform: "rotate(45deg) translate(-2px, -2px)",
+              }} />
+            </div>
             車検費用チェッカー
           </div>
           <div

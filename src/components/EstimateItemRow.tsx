@@ -80,7 +80,7 @@ export default function EstimateItemRow({
               min="0"
               step="1"
               placeholder={qtyConfig && qty > 1 ? `${qty}${qtyConfig.unit}分の合計金額` : "金額を入力"}
-              aria-label="見積もり金額"
+              aria-label={selectedRate ? `${selectedRate.label}の見積もり金額` : "見積もり金額"}
               aria-describedby={range ? `hint-${item.uid}` : undefined}
               value={item.amount}
               onChange={(e) => onChange(item.uid, "amount", e.target.value)}

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /_next/
 
 Sitemap: https://mitsumori-checker.vercel.app/sitemap.xml

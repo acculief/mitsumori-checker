@@ -3,9 +3,8 @@
 import { useState, useCallback } from "react";
 import { VehicleSize, EstimateItem } from "@/lib/types";
 
-let uidCounter = 0;
 function genUid() {
-  return `item-${++uidCounter}`;
+  return crypto.randomUUID();
 }
 
 function emptyItem(): EstimateItem {

@@ -163,12 +163,21 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
     <div ref={containerRef} className="relative">
       {/* Selected state: show label with clear button */}
       {selectedItem && !isOpen ? (
-        <button
-          type="button"
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => {
             setIsOpen(true);
             setQuery("");
             setTimeout(() => inputRef.current?.focus(), 0);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setIsOpen(true);
+              setQuery("");
+              setTimeout(() => inputRef.current?.focus(), 0);
+            }
           }}
           className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 text-left flex items-center justify-between gap-2 hover:border-slate-300 transition-colors cursor-pointer"
         >
@@ -186,7 +195,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
               <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
-        </button>
+        </div>
       ) : (
         <input
           ref={inputRef}

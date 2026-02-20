@@ -51,7 +51,7 @@ export const metadata: Metadata = {
       "車検の見積もり、高くない？相場データと比較して適正価格かすぐわかる無料ツール。",
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: `${siteUrl}/`,
   },
   verification: {
     google: "0uJTSoLifNf9F30GBAdAstHG5n6Ci6kGC29csJZbdRM",

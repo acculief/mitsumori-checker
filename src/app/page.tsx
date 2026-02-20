@@ -72,6 +72,7 @@ export default function Home() {
                   </div>
                   {i < stepLabels.length - 1 && (
                     <div
+                      aria-hidden="true"
                       className={`flex-1 h-px mx-1.5 mt-[-16px] ${
                         isComplete ? "bg-primary" : "bg-slate-200"
                       }`}
@@ -121,26 +122,26 @@ export default function Home() {
                 <Link href="/guide/stamp-fee/" className="hover:text-primary transition-colors">印紙代</Link>
                 <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">車検基本料</div>
                 <Link href="/guide/inspection-fee/" className="hover:text-primary transition-colors">車検基本料</Link>
-                <span>24ヶ月点検整備</span>
-                <span>代車費用</span>
                 <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">メンテナンス・部品交換</div>
                 <Link href="/guide/engine-oil/" className="hover:text-primary transition-colors">エンジンオイル交換</Link>
                 <Link href="/guide/oil-element/" className="hover:text-primary transition-colors">オイルフィルター交換</Link>
                 <Link href="/guide/brake-pad-front/" className="hover:text-primary transition-colors">ブレーキパッド交換（前）</Link>
                 <Link href="/guide/brake-pad-rear/" className="hover:text-primary transition-colors">ブレーキパッド交換（後）</Link>
                 <Link href="/guide/brake-rotor-front/" className="hover:text-primary transition-colors">ブレーキローター交換（前）</Link>
-                <span>ブレーキローター交換（後）</span>
                 <Link href="/guide/brake-fluid/" className="hover:text-primary transition-colors">ブレーキフルード交換</Link>
                 <Link href="/guide/coolant/" className="hover:text-primary transition-colors">クーラント交換</Link>
                 <Link href="/guide/atf/" className="hover:text-primary transition-colors">ATF/CVTF交換</Link>
+                <Link href="/guide/windshield/" className="hover:text-primary transition-colors">フロントガラス交換</Link>
                 <Link href="/guide/tire/" className="hover:text-primary transition-colors">タイヤ交換</Link>
                 <Link href="/guide/battery/" className="hover:text-primary transition-colors">バッテリー交換</Link>
                 <Link href="/guide/wiper-blade/" className="hover:text-primary transition-colors">ワイパーゴム交換</Link>
                 <Link href="/guide/air-filter/" className="hover:text-primary transition-colors">エアクリーナー交換</Link>
+                <Link href="/guide/cabin-air-filter/" className="hover:text-primary transition-colors">エアコンフィルター交換</Link>
                 <Link href="/guide/spark-plug/" className="hover:text-primary transition-colors">スパークプラグ交換</Link>
                 <Link href="/guide/timing-belt/" className="hover:text-primary transition-colors">タイミングベルト交換</Link>
+                <Link href="/guide/v-belt/" className="hover:text-primary transition-colors">Vベルト交換</Link>
                 <Link href="/guide/driveshaft-boot/" className="hover:text-primary transition-colors">ドライブシャフトブーツ交換</Link>
-                <span>発炎筒交換</span>
+                <Link href="/guide/power-steering-fluid/" className="hover:text-primary transition-colors">パワステフルード交換</Link>
                 <Link href="/guide/rear-glass/" className="hover:text-primary transition-colors">リアガラス交換</Link>
                 <Link href="/guide/side-glass/" className="hover:text-primary transition-colors">サイドガラス交換</Link>
               </div>
