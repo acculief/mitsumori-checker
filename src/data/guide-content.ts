@@ -444,3 +444,15 @@ export const guideContents: GuideContent[] = [
     relatedSlugs: ["windshield", "rear-glass"],
   },
 ];
+
+// Build-time validation: ensure all relatedSlugs reference existing guides
+const slugSet = new Set(guideContents.map((g) => g.slug));
+for (const guide of guideContents) {
+  for (const related of guide.relatedSlugs) {
+    if (!slugSet.has(related)) {
+      throw new Error(
+        `guide-content.ts: "${guide.slug}" references unknown relatedSlug "${related}"`
+      );
+    }
+  }
+}

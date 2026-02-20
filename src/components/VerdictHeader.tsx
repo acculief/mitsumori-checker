@@ -17,7 +17,7 @@ const verdictStyles: Record<OverallVerdict, {
 }> = {
   cheap: {
     message: "この見積もりは相場より割安です",
-    subTemplate: (pct) => `相場中央値より ${pct}% 安い見積もりです。`,
+    subTemplate: (pct) => `相場中央値より ${pct}% 安い見積もりです。この工場での車検を検討してよいでしょう。`,
     borderColor: "border-sky-400",
     iconBg: "bg-sky-50",
     iconColor: "text-sky-600",

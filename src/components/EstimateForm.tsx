@@ -3,7 +3,10 @@
 import { useMemo } from "react";
 import { EstimateItem, VehicleSize } from "@/lib/types";
 import { vehicleSizeLabels } from "@/lib/constants";
+import { marketRates } from "@/data/market-rates";
 import EstimateItemRow from "./EstimateItemRow";
+
+const MAX_ITEMS = marketRates.length;
 
 interface Props {
   vehicleSize: VehicleSize;
@@ -84,13 +87,15 @@ export default function EstimateForm({
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={onAddItem}
-        className="mt-3 w-full py-2.5 rounded-lg border border-dashed border-slate-300 text-sm text-slate-500 hover:border-primary hover:text-primary hover:bg-primary-light transition-all cursor-pointer"
-      >
-        + 項目を追加
-      </button>
+      {items.length < MAX_ITEMS && (
+        <button
+          type="button"
+          onClick={onAddItem}
+          className="mt-3 w-full py-2.5 rounded-lg border border-dashed border-slate-300 text-sm text-slate-500 hover:border-primary hover:text-primary hover:bg-primary-light transition-all cursor-pointer"
+        >
+          + 項目を追加
+        </button>
+      )}
 
       {/* Desktop CTA */}
       <div className="mt-6 hidden sm:block">

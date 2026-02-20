@@ -1,4 +1,5 @@
 import { affiliateServices } from "@/data/affiliate-links";
+import { dataLastUpdated } from "@/data/market-rates";
 import { formatYen } from "@/lib/formatters";
 
 interface Props {
@@ -28,7 +29,7 @@ export default function AffiliateCTA({
       <div className="rounded-xl bg-white border border-slate-200 p-5">
         <p className="text-xs text-slate-600 leading-relaxed">
           {hasExpensiveItems
-            ? "この診断は全国の整備工場の公開価格をもとにした目安です。正確な費用は、実際の工場から見積もりを取ることで確認できます。"
+            ? `この診断は全国の整備工場の公開価格（${dataLastUpdated}時点・25項目）をもとにした目安です。正確な費用は、実際の工場から見積もりを取ることで確認できます。`
             : "この見積もりは相場範囲内です。口コミや実績で工場を選ぶと、より安心して車検を進められます。"}
         </p>
 
