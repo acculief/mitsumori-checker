@@ -75,15 +75,17 @@ export default function EstimateItemRow({
               ¥
             </span>
             <input
-              type="number"
+              type="text"
               inputMode="numeric"
-              min="0"
-              step="1"
+              pattern="[0-9]*"
               placeholder={qtyConfig && qty > 1 ? `${qty}${qtyConfig.unit}分の合計金額` : "金額を入力"}
               aria-label={selectedRate ? `${selectedRate.label}の見積もり金額` : "見積もり金額"}
               aria-describedby={range ? `hint-${item.uid}` : undefined}
               value={item.amount}
-              onChange={(e) => onChange(item.uid, "amount", e.target.value)}
+              onChange={(e) => {
+                const v = e.target.value.replace(/[^0-9]/g, "");
+                onChange(item.uid, "amount", v);
+              }}
               className="w-full rounded-md border border-slate-200 bg-white pl-7 pr-3 py-2 text-sm text-slate-900 text-right font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
           </div>

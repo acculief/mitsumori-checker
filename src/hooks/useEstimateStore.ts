@@ -16,6 +16,7 @@ export function useEstimateStore() {
   const [vehicleSize, setVehicleSize] = useState<VehicleSize | null>(null);
   const [items, setItems] = useState<EstimateItem[]>([emptyItem()]);
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [isSample, setIsSample] = useState(false);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -70,6 +71,7 @@ export function useEstimateStore() {
     setVehicleSize(null);
     setItems([emptyItem()]);
     setStep(1);
+    setIsSample(false);
     scrollToTop();
   }, [scrollToTop]);
 
@@ -84,6 +86,23 @@ export function useEstimateStore() {
     scrollToTop();
   }, [scrollToTop]);
 
+  const loadSample = useCallback(() => {
+    const sampleItems: EstimateItem[] = [
+      { uid: genUid(), itemId: "jibaiseki", amount: 17540, quantity: 1 },
+      { uid: genUid(), itemId: "weight_tax", amount: 6600, quantity: 1 },
+      { uid: genUid(), itemId: "stamp_fee", amount: 1400, quantity: 1 },
+      { uid: genUid(), itemId: "inspection_fee", amount: 22000, quantity: 1 },
+      { uid: genUid(), itemId: "engine_oil", amount: 4800, quantity: 1 },
+      { uid: genUid(), itemId: "brake_fluid", amount: 7500, quantity: 1 },
+    ];
+    setVehicleSize("kei");
+    setItems(sampleItems);
+    setStep(3);
+    setIsSample(true);
+    scrollToTop();
+    trackEvent("sample_load");
+  }, [scrollToTop]);
+
   return {
     vehicleSize,
     items,
@@ -94,7 +113,9 @@ export function useEstimateStore() {
     removeItem,
     goToResults,
     backToForm,
+    isSample,
     backToVehicle,
     reset,
+    loadSample,
   };
 }

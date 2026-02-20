@@ -117,6 +117,16 @@ export default function HomeClient({ seoContent }: Props) {
               約2分で完了 · 登録不要 · 完全無料
             </p>
 
+            <div className="mt-5 text-center">
+              <button
+                type="button"
+                onClick={store.loadSample}
+                className="text-xs text-slate-400 underline underline-offset-2 hover:text-primary transition-colors cursor-pointer"
+              >
+                見積もりが手元にない方はサンプルで体験 →
+              </button>
+            </div>
+
             {/* SEO: 静的コンテンツ（クローラー向けキーワード） */}
             <details className="mt-6 text-xs text-slate-500">
               <summary className="cursor-pointer text-center text-slate-400 hover:text-slate-600 transition-colors">
@@ -176,6 +186,20 @@ export default function HomeClient({ seoContent }: Props) {
         {store.step === 3 && summary && (
           <div className="space-y-4">
             <h2 className="sr-only">診断結果</h2>
+            {store.isSample && (
+              <div className="rounded-lg bg-sky-50 border border-sky-200 px-4 py-3 flex items-center justify-between gap-3">
+                <p className="text-xs text-sky-700">
+                  これはサンプル見積もり（軽自動車6項目）の診断結果です
+                </p>
+                <button
+                  type="button"
+                  onClick={store.reset}
+                  className="shrink-0 text-xs font-bold text-sky-700 underline underline-offset-2 hover:text-sky-900 cursor-pointer"
+                >
+                  自分の見積もりで診断 →
+                </button>
+              </div>
+            )}
             <VerdictHeader summary={summary} />
             <SavingsSummary summary={summary} />
 
