@@ -72,9 +72,9 @@ const verdictStyles: Record<OverallVerdict, {
 };
 
 function getOverallMessage(summary: SummaryResult) {
-  const ratio = summary.totalAmount / summary.totalMedian;
   const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
   const style = verdictStyles[verdict];
+  const ratio = summary.totalMedian > 0 ? summary.totalAmount / summary.totalMedian : 1;
   const pct = verdict === "cheap"
     ? Math.round((1 - ratio) * 100)
     : Math.round((ratio - 1) * 100);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useId } from "react";
 import { marketRates } from "@/data/market-rates";
 import { MarketRateItem } from "@/lib/types";
 
@@ -19,6 +19,7 @@ interface Props {
 }
 
 export default function ItemCombobox({ value, usedIds, onChange }: Props) {
+  const listboxId = useId();
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [highlightIndex, setHighlightIndex] = useState(-1);
@@ -198,6 +199,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
           aria-label="見積もり項目を検索"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          aria-controls={listboxId}
           role="combobox"
           aria-autocomplete="list"
           className="w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -208,6 +210,7 @@ export default function ItemCombobox({ value, usedIds, onChange }: Props) {
       {isOpen && (
         <div
           ref={listRef}
+          id={listboxId}
           role="listbox"
           className="absolute z-[70] left-0 right-0 mt-1 max-h-60 overflow-y-auto rounded-lg border border-slate-200 bg-white shadow-xl"
         >

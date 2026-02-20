@@ -53,7 +53,7 @@ export default function EstimateItemRow({
                       onClick={() =>
                         onChange(item.uid, "quantity", String(n))
                       }
-                      className={`px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer active:scale-95 ${
+                      className={`min-w-[44px] min-h-[44px] px-3 py-2 text-xs font-medium transition-colors cursor-pointer active:scale-95 flex items-center justify-center ${
                         qty === n
                           ? "bg-primary text-white"
                           : "text-slate-600 hover:bg-slate-50"

@@ -17,10 +17,15 @@ export function useEstimateStore() {
   const [items, setItems] = useState<EstimateItem[]>([emptyItem()]);
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const selectVehicle = useCallback((size: VehicleSize) => {
     setVehicleSize(size);
     setStep(2);
-  }, []);
+    scrollToTop();
+  }, [scrollToTop]);
 
   const updateItem = useCallback(
     (uid: string, field: "itemId" | "amount" | "quantity", value: string) => {
@@ -47,10 +52,6 @@ export function useEstimateStore() {
 
   const removeItem = useCallback((uid: string) => {
     setItems((prev) => prev.filter((it) => it.uid !== uid));
-  }, []);
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const goToResults = useCallback(() => {

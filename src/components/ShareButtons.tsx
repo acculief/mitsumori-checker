@@ -10,9 +10,17 @@ interface Props {
   summary: SummaryResult;
 }
 
+const verdictEmoji: Record<ReturnType<typeof getOverallVerdict>, string> = {
+  cheap: "\u{1F4B0}",
+  fair: "\u2705",
+  slightly_high: "\u26A0\uFE0F",
+  high: "\u{1F6A8}",
+};
+
 function buildShareText(summary: SummaryResult): string {
   const verdict = getOverallVerdict(summary.totalAmount, summary.totalMedian);
-  return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら「${overallVerdictLabels[verdict]}」でした`;
+  const emoji = verdictEmoji[verdict];
+  return `車検の見積もり${formatYen(summary.totalAmount)}を診断したら${emoji}「${overallVerdictLabels[verdict]}」でした\n\n#車検費用チェッカー #車検`;
 }
 
 export default function ShareButtons({ summary }: Props) {
