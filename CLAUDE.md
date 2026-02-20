@@ -24,6 +24,7 @@
 - `src/data/affiliate-links.ts` — アフィリエイト送客先データ（プレースホルダーURL）
 
 ## コンポーネント構成
+- `SeoContent.tsx` — SEO用静的コンテンツ（相場テーブル＋使い方＋FAQ 7問）
 - `Header.tsx` — グラデーションヘッダー
 - `VehicleSelector.tsx` — 車両サイズ4択カード
 - `EstimateForm.tsx` — 見積もり項目入力（動的行追加/削除）
@@ -105,7 +106,7 @@ https://mitsumori-checker.vercel.app
 1. ✅ MVP完成（3ステップフォーム + 診断結果）
 2. ✅ リッチUI化（競合ベンチマーク反映）
 3. ✅ SEO基盤整備（metadata/openGraph/twitter/JSON-LD/サイトマップ/robots.txt/OGP画像）
-4. 🔲 コンテンツ拡充（車検の基礎知識ページ、FAQ）
+4. ✅ SEOコンテンツ追加（相場テーブル+FAQ7問+HowTo構造化データ / 個別ガイドページは未着手）
 5. ✅ SNS共有機能（X共有 + LINE共有 + URLコピー）
 6. 🔲 GA4 / Search Console 連携
 7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA）
