@@ -58,7 +58,7 @@ export default function EstimateItemRow({
                           ? "bg-primary text-white"
                           : "text-slate-600 hover:bg-slate-50"
                       } ${n > 1 ? "border-l border-slate-200" : ""}`}
-                      aria-label={`${n}${qtyConfig.unit}`}
+                      aria-label={`${selectedRate?.label ?? "項目"} ${n}${qtyConfig.unit}`}
                       aria-pressed={qty === n}
                     >
                       {n}{qtyConfig.unit}

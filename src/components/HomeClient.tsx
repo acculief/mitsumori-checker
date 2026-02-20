@@ -113,6 +113,9 @@ export default function HomeClient({ seoContent }: Props) {
             <p className="text-center text-xs text-slate-400 mt-4">
               全国の車検・整備工場の一般的な価格帯をもとにした相場データで診断します
             </p>
+            <p className="text-center text-xs text-slate-400 mt-1">
+              約2分で完了 · 登録不要 · 完全無料
+            </p>
 
             {/* SEO: 静的コンテンツ（クローラー向けキーワード） */}
             <details className="mt-6 text-xs text-slate-500">

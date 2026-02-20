@@ -62,6 +62,10 @@ export default function EstimateForm({
         </button>
       </div>
 
+      <p className="text-xs text-slate-500 mb-3 leading-relaxed">
+        見積書の項目名で検索して選択し、金額を入力してください。「+ 項目を追加」で行を増やせます。
+      </p>
+
       <div className="space-y-3">
         {items.map((item) => (
           <EstimateItemRow
