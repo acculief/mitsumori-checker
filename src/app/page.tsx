@@ -8,6 +8,7 @@ import SavingsSummary from "@/components/SavingsSummary";
 import ResultsTable from "@/components/ResultsTable";
 import AffiliateCTA from "@/components/AffiliateCTA";
 import ShareButtons from "@/components/ShareButtons";
+import SeoContent from "@/components/SeoContent";
 import { useEstimateStore } from "@/hooks/useEstimateStore";
 import { compareEstimate } from "@/lib/compare";
 import { stepLabels } from "@/lib/constants";
@@ -143,6 +144,8 @@ export default function Home() {
                 <span>サイドガラス交換</span>
               </div>
             </details>
+
+            <SeoContent />
           </div>
         )}
 
