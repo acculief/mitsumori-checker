@@ -15,6 +15,7 @@
 | パス | 内容 |
 |------|------|
 | `/` | シングルページ（3ステップフォーム: 車両選択→見積入力→診断結果） |
+| `/guide/[slug]/` | 項目別ガイドページ（25項目 × 相場テーブル＋解説＋Tips＋CTA） |
 
 ## データ構成
 - `src/data/market-rates.ts` — 相場データベース（25項目 × 4車両サイズ × low/median/high）
@@ -22,6 +23,7 @@
 - `src/lib/compare.ts` — 価格比較ロジック（5段階判定）
 - `src/lib/constants.ts` — ラベル・色・アイコン定数
 - `src/data/affiliate-links.ts` — アフィリエイト送客先データ（プレースホルダーURL）
+- `src/data/guide-content.ts` — ガイドページコンテンツ（25項目の解説・Tips・関連リンク）
 
 ## コンポーネント構成
 - `SeoContent.tsx` — SEO用静的コンテンツ（相場テーブル＋使い方＋FAQ 7問）
@@ -112,4 +114,4 @@ https://mitsumori-checker.vercel.app
 7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA）
 8. 🔲 PWA対応（manifest.json✅ / Service Worker未 / オフライン未）
 9. 🔲 相見積もり機能（複数店舗の見積もりを並列比較）
-10. 🔲 項目別ガイドページ（コンテンツSEO）
+10. ✅ 項目別ガイドページ（25ページ /guide/[slug]/ 静的生成）
