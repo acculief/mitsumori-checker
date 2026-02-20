@@ -111,7 +111,7 @@ https://mitsumori-checker.vercel.app
 3. ✅ SEO基盤整備（metadata/openGraph/twitter/JSON-LD/動的サイトマップ/robots.txt/OGP画像）
 4. ✅ SEOコンテンツ追加（相場テーブル+FAQ7問+HowTo+BreadcrumbList+ガイドFAQ自動生成）
 5. ✅ SNS共有機能（X共有 + LINE共有 + URLコピー）
-6. 🔲 GA4 / Search Console 連携
+6. ✅ GA4計測基盤（GoogleAnalyticsコンポーネント + 4ファネルイベント / Search Console verification✅ / GA4有効化はNEXT_PUBLIC_GA_MEASUREMENT_ID設定後）
 7. ✅ アフィリエイト導線（楽天Car車検/EPARK車検/グーネットピットへのCTA + UTMトラッキング）
 8. 🔲 PWA対応（manifest.json✅ / Service Worker未 / オフライン未）
 9. 🔲 相見積もり機能（複数店舗の見積もりを並列比較）
