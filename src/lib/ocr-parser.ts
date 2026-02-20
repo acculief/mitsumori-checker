@@ -19,7 +19,7 @@ const keywordRules: KeywordRule[] = [
   { itemId: "weight_tax", keywords: ["重量税", "自動車重量"] },
   { itemId: "stamp_fee", keywords: ["印紙", "検査手数料", "証紙"] },
   // 車検基本料・点検
-  { itemId: "inspection_fee", keywords: ["車検基本料", "基本料", "基本工賃", "検査料", "車検整備", "24ヶ月点検", "24ケ月点検", "12ヶ月点検", "12ケ月点検", "法定点検", "継続検査", "定期点検"] },
+  { itemId: "inspection_fee", keywords: ["車検基本料", "基本料", "基本工賃", "検査料", "車検整備", "24ヶ月点検", "24ケ月点検", "12ヶ月点検", "12ケ月点検", "法定点検", "継続検査", "定期点検"], exclude: ["種別"] },
   // メンテナンス
   { itemId: "engine_oil", keywords: ["エンジンオイル", "エンジン オイル"], exclude: ["エレメント", "フィルター", "フィルタ"] },
   { itemId: "oil_element", keywords: ["オイルエレメント", "オイルフィルター", "オイルフィルタ", "オイル エレメント", "オイル フィルター"] },
@@ -50,11 +50,11 @@ const brakePadGeneric: KeywordRule = {
   keywords: ["ブレーキパッド", "ブレーキパット"],
 };
 
-/** 金額の周辺行を探す範囲 */
-const AMOUNT_SEARCH_WINDOW = 3;
+/** 合計行・ヘッダー行に含まれるキーワード */
+const SUMMARY_KEYWORDS = ["合計", "請求金額", "消費税", "預り", "諸費用", "振込"];
 
 /**
- * 全角数字→半角数字、全角カンマ→半角カンマ、全角ハイフン→半角に変換
+ * 全角数字→半角数字、全角カンマ→半角カンマ、全角スペース→半角に変換
  */
 function normalizeText(text: string): string {
   return text
@@ -86,19 +86,46 @@ function extractAmounts(line: string): number[] {
     if (!isNaN(val) && val > 0 && !amounts.includes(val)) amounts.push(val);
   }
 
-  // カンマ区切りの数字（1,000以上）で上記に該当しなかったもの
-  const commaNumPattern = /(?<![¥￥\d])([0-9]{1,3}(?:,[0-9]{3})+)(?!円)/g;
+  // カンマ区切りの数字（1,000以上）で上記に該当しなかったもの（単位付きを除外）
+  const commaNumPattern = /(?<![¥￥\d])([0-9]{1,3}(?:,[0-9]{3})+)(?!円|km|cc|mm|kg|台|名)/gi;
   while ((match = commaNumPattern.exec(normalized)) !== null) {
     const val = parseInt(match[1].replace(/,/g, ""), 10);
     if (!isNaN(val) && val > 0 && !amounts.includes(val)) amounts.push(val);
   }
 
-  // カンマなしの4桁以上の数字（100〜999,999の範囲で、年・日付・郵便番号等を除外）
-  const plainNumPattern = /(?<![¥￥\d,./\-])([0-9]{4,6})(?![0-9,./\-年月日ヶケ])/g;
+  // カンマなしの4桁以上の数字（100〜999,999の範囲で、年・日付・単位付きを除外）
+  const plainNumPattern = /(?<![¥￥\d,./\-])([0-9]{4,6})(?![0-9,./\-年月日ヶケkKcCmMgG])/g;
   while ((match = plainNumPattern.exec(normalized)) !== null) {
     const val = parseInt(match[1], 10);
     if (!isNaN(val) && val >= 100 && val <= 999999 && !amounts.includes(val)) {
-      // 年（1900-2099）や郵便番号パターンを除外
+      if (val >= 1900 && val <= 2099) continue;
+      amounts.push(val);
+    }
+  }
+
+  return amounts;
+}
+
+/**
+ * ¥/￥プレフィックスなしの金額のみ抽出（テーブル内の素の数字用）
+ */
+function extractTableAmounts(line: string): number[] {
+  const normalized = normalizeText(line);
+  const amounts: number[] = [];
+  let match;
+
+  // カンマ区切りの数字（単位付きを除外）
+  const commaNumPattern = /(?<![¥￥\d])([0-9]{1,3}(?:,[0-9]{3})+)(?![円¥￥]|km|cc|mm|kg)/gi;
+  while ((match = commaNumPattern.exec(normalized)) !== null) {
+    const val = parseInt(match[1].replace(/,/g, ""), 10);
+    if (!isNaN(val) && val > 0) amounts.push(val);
+  }
+
+  // カンマなしの4桁以上の数字（単位付きを除外）
+  const plainNumPattern = /(?<![¥￥\d,./\-])([0-9]{4,6})(?![0-9,./\-年月日ヶケ円¥￥kKcCmMgG])/g;
+  while ((match = plainNumPattern.exec(normalized)) !== null) {
+    const val = parseInt(match[1], 10);
+    if (!isNaN(val) && val >= 100 && val <= 999999) {
       if (val >= 1900 && val <= 2099) continue;
       amounts.push(val);
     }
@@ -138,39 +165,12 @@ function matchItem(line: string): { itemId: string; confidence: "high" | "medium
 }
 
 /**
- * 周辺行から金額を探す（±AMOUNT_SEARCH_WINDOW行）
+ * Pass 1: 近接行アプローチ（項目名と金額が同じ行or近い行にある場合）
  */
-function findNearbyAmounts(lines: string[], centerIndex: number): number[] {
-  // まず同じ行
-  const amounts = extractAmounts(lines[centerIndex]);
-  if (amounts.length > 0) return amounts;
-
-  // 周辺行を近い順に探す
-  for (let offset = 1; offset <= AMOUNT_SEARCH_WINDOW; offset++) {
-    const nextIdx = centerIndex + offset;
-    const prevIdx = centerIndex - offset;
-
-    if (nextIdx < lines.length) {
-      const nextAmounts = extractAmounts(lines[nextIdx]);
-      if (nextAmounts.length > 0) return nextAmounts;
-    }
-
-    if (prevIdx >= 0) {
-      const prevAmounts = extractAmounts(lines[prevIdx]);
-      if (prevAmounts.length > 0) return prevAmounts;
-    }
-  }
-
-  return [];
-}
-
-/**
- * OCRテキストから項目と金額を抽出
- */
-export function parseOcrText(ocrText: string): OcrExtractedItem[] {
-  const lines = ocrText.split("\n").map((l) => l.trim()).filter(Boolean);
+function parseByProximity(lines: string[]): OcrExtractedItem[] {
   const results: OcrExtractedItem[] = [];
   const usedItemIds = new Set<string>();
+  const WINDOW = 3;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -178,10 +178,24 @@ export function parseOcrText(ocrText: string): OcrExtractedItem[] {
     if (!itemMatch) continue;
     if (usedItemIds.has(itemMatch.itemId)) continue;
 
-    const amounts = findNearbyAmounts(lines, i);
+    // 同じ行から探す
+    let amounts = extractAmounts(line);
+
+    // 周辺行を探す
+    if (amounts.length === 0) {
+      for (let offset = 1; offset <= WINDOW; offset++) {
+        if (i + offset < lines.length) {
+          amounts = extractAmounts(lines[i + offset]);
+          if (amounts.length > 0) break;
+        }
+        if (i - offset >= 0) {
+          amounts = extractAmounts(lines[i - offset]);
+          if (amounts.length > 0) break;
+        }
+      }
+    }
 
     if (amounts.length > 0) {
-      // 金額として最もらしいものを選ぶ（最大値）
       const amount = Math.max(...amounts);
       usedItemIds.add(itemMatch.itemId);
       results.push({
@@ -195,4 +209,84 @@ export function parseOcrText(ocrText: string): OcrExtractedItem[] {
   }
 
   return results;
+}
+
+/**
+ * Pass 2: 順序ベースアプローチ（テーブル形式で項目名と金額が離れている場合）
+ * 項目名の出現順序と金額行の出現順序を対応させてペアリングする
+ */
+function parseByOrder(lines: string[]): OcrExtractedItem[] {
+  // 1. 項目マッチを収集（出現順）
+  const itemMatches: Array<{
+    index: number;
+    itemId: string;
+    label: string;
+    confidence: "high" | "medium";
+  }> = [];
+  const usedItemIds = new Set<string>();
+
+  for (let i = 0; i < lines.length; i++) {
+    const m = matchItem(lines[i]);
+    if (m && !usedItemIds.has(m.itemId)) {
+      usedItemIds.add(m.itemId);
+      itemMatches.push({
+        index: i,
+        itemId: m.itemId,
+        label: lines[i].substring(0, 30),
+        confidence: m.confidence,
+      });
+    }
+  }
+
+  if (itemMatches.length === 0) return [];
+
+  // 2. 金額行を収集（最初の項目以降、合計行・項目行を除外、¥プレフィックスなしの素の数字のみ）
+  const itemIndices = new Set(itemMatches.map((m) => m.index));
+  const firstItemIndex = itemMatches[0].index;
+  const amountLines: Array<{ amounts: number[] }> = [];
+
+  for (let i = firstItemIndex; i < lines.length; i++) {
+    if (itemIndices.has(i)) continue;
+    if (SUMMARY_KEYWORDS.some((kw) => lines[i].includes(kw))) continue;
+
+    const amounts = extractTableAmounts(lines[i]);
+    if (amounts.length > 0) {
+      amountLines.push({ amounts });
+    }
+  }
+
+  // 3. 順序ベースでペアリング
+  const results: OcrExtractedItem[] = [];
+  const pairCount = Math.min(itemMatches.length, amountLines.length);
+
+  for (let i = 0; i < pairCount; i++) {
+    const item = itemMatches[i];
+    const amountLine = amountLines[i];
+    const amount = Math.max(...amountLine.amounts);
+
+    results.push({
+      itemId: item.itemId,
+      label: item.label,
+      amount,
+      quantity: 1,
+      confidence: "medium", // テーブル解析は確信度を下げる
+    });
+  }
+
+  return results;
+}
+
+/**
+ * OCRテキストから項目と金額を抽出
+ * Pass 1（近接行）で見つからなければ Pass 2（順序ベース）にフォールバック
+ */
+export function parseOcrText(ocrText: string): OcrExtractedItem[] {
+  const lines = ocrText.split("\n").map((l) => l.trim()).filter(Boolean);
+
+  // Pass 1: 項目名と金額が近い行にある場合（レシート形式など）
+  const results = parseByProximity(lines);
+  if (results.length > 0) return results;
+
+  // Pass 2: テーブル形式（項目名と金額が離れている場合）
+  return parseByOrder(lines);
 }
