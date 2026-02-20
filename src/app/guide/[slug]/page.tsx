@@ -70,8 +70,49 @@ export default async function GuidePage({
     .map((s) => guideContents.find((g) => g.slug === s))
     .filter(Boolean);
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "トップ",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: guide.title,
+        item: `${siteUrl}/guide/${slug}/`,
+      },
+    ],
+  };
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.metaDescription,
+    url: `${siteUrl}/guide/${slug}/`,
+    datePublished: "2026-02-20",
+    dateModified: "2026-02-20",
+    author: { "@type": "Organization", name: siteName, url: siteUrl },
+    publisher: { "@type": "Organization", name: siteName, url: siteUrl },
+    mainEntityOfPage: `${siteUrl}/guide/${slug}/`,
+    inLanguage: "ja",
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
         <div className="max-w-2xl mx-auto px-4 py-3">

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Header from "@/components/Header";
 import VehicleSelector from "@/components/VehicleSelector";
 import EstimateForm from "@/components/EstimateForm";
@@ -115,33 +116,33 @@ export default function Home() {
               </summary>
               <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 px-2">
                 <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">法定費用</div>
-                <span>自賠責保険料</span>
-                <span>自動車重量税</span>
-                <span>印紙代</span>
+                <Link href="/guide/jibaiseki/" className="hover:text-primary transition-colors">自賠責保険料</Link>
+                <Link href="/guide/weight-tax/" className="hover:text-primary transition-colors">自動車重量税</Link>
+                <Link href="/guide/stamp-fee/" className="hover:text-primary transition-colors">印紙代</Link>
                 <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">車検基本料</div>
-                <span>車検基本料</span>
+                <Link href="/guide/inspection-fee/" className="hover:text-primary transition-colors">車検基本料</Link>
                 <span>24ヶ月点検整備</span>
                 <span>代車費用</span>
                 <div className="font-medium text-slate-600 col-span-2 mt-2 mb-0.5">メンテナンス・部品交換</div>
-                <span>エンジンオイル交換</span>
-                <span>オイルフィルター交換</span>
-                <span>ブレーキパッド交換（前）</span>
-                <span>ブレーキパッド交換（後）</span>
-                <span>ブレーキローター交換（前）</span>
+                <Link href="/guide/engine-oil/" className="hover:text-primary transition-colors">エンジンオイル交換</Link>
+                <Link href="/guide/oil-element/" className="hover:text-primary transition-colors">オイルフィルター交換</Link>
+                <Link href="/guide/brake-pad-front/" className="hover:text-primary transition-colors">ブレーキパッド交換（前）</Link>
+                <Link href="/guide/brake-pad-rear/" className="hover:text-primary transition-colors">ブレーキパッド交換（後）</Link>
+                <Link href="/guide/brake-rotor-front/" className="hover:text-primary transition-colors">ブレーキローター交換（前）</Link>
                 <span>ブレーキローター交換（後）</span>
-                <span>ブレーキフルード交換</span>
-                <span>クーラント交換</span>
-                <span>ATF/CVTF交換</span>
-                <span>タイヤ交換</span>
-                <span>バッテリー交換</span>
-                <span>ワイパーゴム交換</span>
-                <span>エアクリーナー交換</span>
-                <span>スパークプラグ交換</span>
-                <span>タイミングベルト交換</span>
-                <span>ドライブシャフトブーツ交換</span>
+                <Link href="/guide/brake-fluid/" className="hover:text-primary transition-colors">ブレーキフルード交換</Link>
+                <Link href="/guide/coolant/" className="hover:text-primary transition-colors">クーラント交換</Link>
+                <Link href="/guide/atf/" className="hover:text-primary transition-colors">ATF/CVTF交換</Link>
+                <Link href="/guide/tire/" className="hover:text-primary transition-colors">タイヤ交換</Link>
+                <Link href="/guide/battery/" className="hover:text-primary transition-colors">バッテリー交換</Link>
+                <Link href="/guide/wiper-blade/" className="hover:text-primary transition-colors">ワイパーゴム交換</Link>
+                <Link href="/guide/air-filter/" className="hover:text-primary transition-colors">エアクリーナー交換</Link>
+                <Link href="/guide/spark-plug/" className="hover:text-primary transition-colors">スパークプラグ交換</Link>
+                <Link href="/guide/timing-belt/" className="hover:text-primary transition-colors">タイミングベルト交換</Link>
+                <Link href="/guide/driveshaft-boot/" className="hover:text-primary transition-colors">ドライブシャフトブーツ交換</Link>
                 <span>発炎筒交換</span>
-                <span>リアガラス交換</span>
-                <span>サイドガラス交換</span>
+                <Link href="/guide/rear-glass/" className="hover:text-primary transition-colors">リアガラス交換</Link>
+                <Link href="/guide/side-glass/" className="hover:text-primary transition-colors">サイドガラス交換</Link>
               </div>
             </details>
 
