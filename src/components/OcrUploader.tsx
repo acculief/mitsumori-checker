@@ -14,7 +14,9 @@ export default function OcrUploader({ onResult }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
   const [resultCount, setResultCount] = useState(0);
+  const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dragCounter = useRef(0);
 
   const handleFile = useCallback(
     async (file: File) => {
@@ -93,8 +95,45 @@ export default function OcrUploader({ onResult }: Props) {
     setResultCount(0);
   }, []);
 
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current++;
+    setDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current--;
+    if (dragCounter.current === 0) setDragging(false);
+  }, []);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dragCounter.current = 0;
+      setDragging(false);
+      const file = e.dataTransfer.files?.[0];
+      if (file) handleFile(file);
+    },
+    [handleFile]
+  );
+
   return (
-    <div className="mb-4">
+    <div
+      className="mb-4"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
       <input
         ref={inputRef}
         type="file"
@@ -109,16 +148,24 @@ export default function OcrUploader({ onResult }: Props) {
         <button
           type="button"
           onClick={handleClick}
-          className="w-full py-3 rounded-xl border-2 border-dashed border-primary/40 bg-orange-50/50 hover:border-primary hover:bg-orange-50 transition-all cursor-pointer group"
+          className={`w-full py-3 rounded-xl border-2 border-dashed transition-all cursor-pointer group ${
+            dragging
+              ? "border-primary bg-orange-50 scale-[1.02]"
+              : "border-primary/40 bg-orange-50/50 hover:border-primary hover:bg-orange-50"
+          }`}
         >
           <div className="flex items-center justify-center gap-2 text-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="group-hover:scale-110 transition-transform">
               <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2" />
             </svg>
-            <span className="text-sm font-bold">写真から読み取る</span>
+            <span className="text-sm font-bold">
+              {dragging ? "ここにドロップ" : "写真から読み取る"}
+            </span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-0.5">見積書の写真をアップロードして自動入力</p>
+          <p className="text-[11px] text-slate-400 mt-0.5">
+            {dragging ? "画像ファイルをドロップしてください" : "写真をアップロードまたはドラッグ&ドロップ"}
+          </p>
         </button>
       )}
 
