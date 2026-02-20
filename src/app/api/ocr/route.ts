@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { parseOcrText } from "@/lib/ocr-parser";
 import type { OcrApiResponse } from "@/lib/ocr-types";
 
-const MAX_BASE64_SIZE = 4 * 1024 * 1024; // 4MB
+const MAX_BASE64_SIZE = 6 * 1024 * 1024; // 6MB（base64後）
 
 export async function POST(req: NextRequest): Promise<NextResponse<OcrApiResponse>> {
   const apiKey = process.env.GOOGLE_CLOUD_VISION_API_KEY;
@@ -26,73 +26,129 @@ export async function POST(req: NextRequest): Promise<NextResponse<OcrApiRespons
   const { image } = body;
   if (!image || typeof image !== "string") {
     return NextResponse.json(
-      { success: false, error: "画像データがありません。" },
+      { success: false, error: "ファイルデータがありません。" },
       { status: 400 }
     );
   }
 
-  // base64部分を取り出す（data:image/...;base64, プレフィックスを除去）
+  // MIMEタイプとbase64データを分離
+  const mimeMatch = image.match(/^data:([^;]+);base64,/);
+  const mimeType = mimeMatch?.[1] ?? "image/jpeg";
   const base64Data = image.includes(",") ? image.split(",")[1] : image;
+  const isPdf = mimeType === "application/pdf";
 
   if (base64Data.length > MAX_BASE64_SIZE) {
     return NextResponse.json(
-      { success: false, error: "画像サイズが大きすぎます（4MB以下にしてください）。" },
+      { success: false, error: "ファイルサイズが大きすぎます。もう少し小さいファイルでお試しください。" },
       { status: 400 }
     );
   }
 
   try {
-    const visionRes = await fetch(
-      `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          requests: [
-            {
-              image: { content: base64Data },
-              features: [{ type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }],
-              imageContext: { languageHints: ["ja"] },
-            },
-          ],
-        }),
-      }
-    );
+    let ocrText: string;
 
-    if (!visionRes.ok) {
-      const errText = await visionRes.text();
-      console.error("Vision API error:", visionRes.status, errText);
-      return NextResponse.json(
-        { success: false, error: "画像の読み取りに失敗しました。もう一度お試しください。" },
-        { status: 502 }
-      );
+    if (isPdf) {
+      // PDF → files:annotate エンドポイント
+      ocrText = await ocrPdf(base64Data, apiKey);
+    } else {
+      // 画像 → images:annotate エンドポイント
+      ocrText = await ocrImage(base64Data, apiKey);
     }
 
-    const visionData = await visionRes.json();
-    const annotations = visionData.responses?.[0]?.fullTextAnnotation;
-
-    if (!annotations?.text) {
-      return NextResponse.json(
-        { success: false, error: "画像からテキストを読み取れませんでした。鮮明な写真で再度お試しください。" },
-        { status: 200 }
-      );
+    if (!ocrText) {
+      return NextResponse.json({
+        success: false,
+        error: "テキストを読み取れませんでした。鮮明な写真で再度お試しください。",
+      });
     }
 
-    const ocrText: string = annotations.text;
     const items = parseOcrText(ocrText);
 
     return NextResponse.json({
       success: true,
-      data: {
-        items,
-        vehicleSize: null,
-      },
+      data: { items, vehicleSize: null },
     });
   } catch (error) {
     console.error("OCR processing error:", error);
+    const msg = error instanceof Error ? error.message : "処理中にエラーが発生しました。";
     return NextResponse.json(
-      { success: false, error: "処理中にエラーが発生しました。もう一度お試しください。" },
+      { success: false, error: msg },
       { status: 500 }
     );
   }
+}
+
+async function ocrImage(base64Data: string, apiKey: string): Promise<string> {
+  const res = await fetch(
+    `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requests: [
+          {
+            image: { content: base64Data },
+            features: [{ type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }],
+            imageContext: { languageHints: ["ja"] },
+          },
+        ],
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    console.error("Vision API error:", res.status, await res.text());
+    throw new Error("画像の読み取りに失敗しました。もう一度お試しください。");
+  }
+
+  const data = await res.json();
+
+  // Vision APIがエラーを返す場合
+  const apiError = data.responses?.[0]?.error;
+  if (apiError) {
+    console.error("Vision API response error:", apiError);
+    throw new Error("この画像は読み取れませんでした。別の画像でお試しください。");
+  }
+
+  return data.responses?.[0]?.fullTextAnnotation?.text ?? "";
+}
+
+async function ocrPdf(base64Data: string, apiKey: string): Promise<string> {
+  const res = await fetch(
+    `https://vision.googleapis.com/v1/files:annotate?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requests: [
+          {
+            inputConfig: {
+              content: base64Data,
+              mimeType: "application/pdf",
+            },
+            features: [{ type: "DOCUMENT_TEXT_DETECTION" }],
+            imageContext: { languageHints: ["ja"] },
+            pages: [1, 2, 3, 4, 5],
+          },
+        ],
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    console.error("Vision files API error:", res.status, await res.text());
+    throw new Error("PDFの読み取りに失敗しました。もう一度お試しください。");
+  }
+
+  const data = await res.json();
+
+  // 全ページのテキストを結合
+  const pages = data.responses?.[0]?.responses ?? [];
+  const texts: string[] = [];
+  for (const page of pages) {
+    const text = page?.fullTextAnnotation?.text;
+    if (text) texts.push(text);
+  }
+
+  return texts.join("\n");
 }

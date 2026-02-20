@@ -4,7 +4,8 @@ import { useState, useRef, useCallback } from "react";
 import type { OcrExtractedItem, OcrApiResponse } from "@/lib/ocr-types";
 import { trackEvent } from "@/lib/analytics";
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB（元ファイル上限）
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp", "application/pdf"];
 
 interface Props {
   onResult: (items: OcrExtractedItem[]) => void;
@@ -22,28 +23,50 @@ export default function OcrUploader({ onResult }: Props) {
     async (file: File) => {
       if (file.size > MAX_FILE_SIZE) {
         setStatus("error");
-        setMessage("ファイルサイズが4MBを超えています。");
+        setMessage("ファイルサイズが10MBを超えています。");
         return;
       }
 
-      if (!file.type.startsWith("image/")) {
+      const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+      const isImage = file.type.startsWith("image/");
+
+      if (!isPdf && !isImage) {
         setStatus("error");
-        setMessage("画像ファイルを選択してください。");
+        setMessage("画像またはPDFファイルを選択してください。");
         return;
       }
 
       setStatus("loading");
       setMessage("");
-      trackEvent("ocr_upload_start");
+      trackEvent("ocr_upload_start", { file_type: isPdf ? "pdf" : "image" });
 
       try {
-        const base64 = await fileToBase64(file);
+        let base64: string;
+        if (isPdf) {
+          // PDFはそのまま送る
+          base64 = await fileToBase64(file);
+        } else {
+          // 画像はリサイズしてペイロードを抑える
+          base64 = await compressImage(file);
+        }
 
         const res = await fetch("/api/ocr/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ image: base64 }),
         });
+
+        if (!res.ok) {
+          let errorMsg = "サーバーエラーが発生しました。もう一度お試しください。";
+          try {
+            const errData: OcrApiResponse = await res.json();
+            if (!errData.success) errorMsg = errData.error;
+          } catch { /* JSONパース失敗時はデフォルトメッセージ */ }
+          setStatus("error");
+          setMessage(errorMsg);
+          trackEvent("ocr_upload_error", { error: `http_${res.status}` });
+          return;
+        }
 
         const data: OcrApiResponse = await res.json();
 
@@ -68,7 +91,7 @@ export default function OcrUploader({ onResult }: Props) {
         trackEvent("ocr_upload_success", { item_count: data.data.items.length });
       } catch {
         setStatus("error");
-        setMessage("通信エラーが発生しました。もう一度お試しください。");
+        setMessage("通信エラーが発生しました。ファイルサイズを小さくして再度お試しください。");
         trackEvent("ocr_upload_error", { error: "network" });
       }
     },
@@ -79,7 +102,6 @@ export default function OcrUploader({ onResult }: Props) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) handleFile(file);
-      // 同じファイルの再選択を可能にする
       e.target.value = "";
     },
     [handleFile]
@@ -137,11 +159,11 @@ export default function OcrUploader({ onResult }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="image/*,.pdf,application/pdf"
         capture="environment"
         onChange={handleChange}
         className="hidden"
-        aria-label="見積書の写真を選択"
+        aria-label="見積書の写真またはPDFを選択"
       />
 
       {status === "idle" && (
@@ -160,11 +182,11 @@ export default function OcrUploader({ onResult }: Props) {
               <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2" />
             </svg>
             <span className="text-sm font-bold">
-              {dragging ? "ここにドロップ" : "写真から読み取る"}
+              {dragging ? "ここにドロップ" : "写真・PDFから読み取る"}
             </span>
           </div>
           <p className="text-[11px] text-slate-400 mt-0.5">
-            {dragging ? "画像ファイルをドロップしてください" : "写真をアップロードまたはドラッグ&ドロップ"}
+            {dragging ? "ファイルをドロップしてください" : "見積書の写真やPDFをアップロード / ドラッグ&ドロップ"}
           </p>
         </button>
       )}
@@ -178,7 +200,7 @@ export default function OcrUploader({ onResult }: Props) {
             </svg>
             <span className="text-sm font-medium">読み取り中...</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">画像を解析しています</p>
+          <p className="text-[11px] text-slate-400 mt-1">ファイルを解析しています</p>
         </div>
       )}
 
@@ -196,7 +218,7 @@ export default function OcrUploader({ onResult }: Props) {
             onClick={handleRetry}
             className="text-xs text-emerald-600 underline underline-offset-2 hover:text-emerald-800 cursor-pointer"
           >
-            別の写真
+            別のファイル
           </button>
         </div>
       )}
@@ -231,5 +253,30 @@ function fileToBase64(file: File): Promise<string> {
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = reject;
     reader.readAsDataURL(file);
+  });
+}
+
+/** 画像をcanvasでリサイズし、JPEG base64に変換（ペイロードサイズ削減） */
+function compressImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX_DIM = 2048;
+      let { width, height } = img;
+      if (width > MAX_DIM || height > MAX_DIM) {
+        const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Canvas not supported")); return; }
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/jpeg", 0.85));
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
   });
 }
