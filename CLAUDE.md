@@ -26,7 +26,8 @@
 - `src/data/guide-content.ts` — ガイドページコンテンツ（25項目の解説・Tips・関連リンク）
 
 ## コンポーネント構成
-- `SeoContent.tsx` — SEO用静的コンテンツ（相場テーブル＋使い方＋FAQ 7問）
+- `HomeClient.tsx` — トップページの対話ロジック（Client Component）
+- `SeoContent.tsx` — SEO用静的コンテンツ（相場テーブル＋使い方＋FAQ 7問）※Server Component
 - `Header.tsx` — グラデーションヘッダー
 - `VehicleSelector.tsx` — 車両サイズ4択カード
 - `EstimateForm.tsx` — 見積もり項目入力（動的行追加/削除）
